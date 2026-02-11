@@ -12,6 +12,8 @@ import { useForm } from "react-hook-form";
 import type { SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 
+import { efetuarLogin } from "@/service/api.ts";
+
 const schema = z.object({
   usuario: z.string().min(3, "O nome deve conter no mínimo 3 caracteres"),
   senha: z.string().min(8, "A senha deve conter no mínimo 8 caracteres"),
@@ -34,8 +36,8 @@ export default function Login() {
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     try {
-      await new Promise((r) => setTimeout(r, 1000)); // tirar depois
-      console.log(data);
+      const { usuario, senha } = data;
+      await efetuarLogin(usuario, senha);
       navigate("/agenda");
     } catch (error) {
       setError("root", {
