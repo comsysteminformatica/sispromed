@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { AxiosError } from "axios";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -12,10 +13,10 @@ import { useForm } from "react-hook-form";
 import type { SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 
-import { efetuarLogin } from "@/service/api.ts";
+import { efetuarLogin, efetuarLoginGoogle } from "@/service/api.ts";
 
 const schema = z.object({
-  usuario: z.string().min(3, "O nome deve conter no mínimo 3 caracteres"),
+  email: z.email("Email inválido"),
   senha: z.string().min(8, "A senha deve conter no mínimo 8 caracteres"),
 });
 
@@ -36,13 +37,15 @@ export default function Login() {
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     try {
-      const { usuario, senha } = data;
-      await efetuarLogin(usuario, senha);
+      const { email, senha } = data;
+      await efetuarLogin(email, senha);
       navigate("/agenda");
     } catch (error) {
-      setError("root", {
-        message: "This email is already taken",
-      });
+      if (error instanceof AxiosError) {
+        setError("root", {
+          message: error.response?.data?.message ?? "Erro ao fazer login",
+        });
+      }
     }
   };
 
@@ -68,12 +71,15 @@ export default function Login() {
           >
             <section className="flex flex-col gap-2">
               <div className="flex flex-col gap-1">
-                <Label htmlFor="usuario">Usuário</Label>
-                <Input {...register("usuario")} id="usuario" type="text" />
-                {errors.usuario && (
-                  <p className="text-red-500 text-sm">
-                    {errors.usuario.message}
-                  </p>
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  {...register("email")}
+                  id="email"
+                  type="email"
+                  value={"iran@local.com"}
+                />
+                {errors.email && (
+                  <p className="text-red-500 text-sm">{errors.email.message}</p>
                 )}
               </div>
               <div className="flex flex-col gap-1">
@@ -83,6 +89,7 @@ export default function Login() {
                     {...register("senha")}
                     id="senha"
                     type={isMostrarSenha ? "text" : "password"}
+                    value={"12345678"}
                   />
                   <Button
                     variant="ghost"
@@ -125,8 +132,11 @@ export default function Login() {
             </section>
             <section>
               <GoogleLogin
-                onSuccess={(credentialResponse) => {
-                  console.log(credentialResponse);
+                onSuccess={async (credentialResponse: any) => {
+                  await efetuarLoginGoogle(
+                    credentialResponse.credential,                    
+                  );
+                  navigate("/agenda");
                 }}
                 onError={() => console.error("Login failed")}
               />

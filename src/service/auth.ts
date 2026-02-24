@@ -1,26 +1,13 @@
-type Tokens = {
-  access_token: string;
-  refresh_token: string;
-};
+let accessToken: null | string = null;
 
-export function setTokens({ access_token, refresh_token }: Tokens) {
-  localStorage.setItem("access_token", access_token);
-  localStorage.setItem("refresh_token", refresh_token);
+export function setAccessToken(token: string) {
+  accessToken = token;
 }
 
-export function getAccessToken(): string | null {
-  return localStorage.getItem("access_token");
+export function getAccessToken(): null | string {
+  return accessToken;
 }
 
-export function getRefreshToken(): string | null {
-  return localStorage.getItem("refresh_token");
-}
-
-export function clearTokens() {
-  localStorage.removeItem("access_token");
-  localStorage.removeItem("refresh_token");
-}
-
-export function isAuthenticated(): boolean {
-  return !!getAccessToken();
+export function clearAccessToken() {
+  accessToken = null;
 }

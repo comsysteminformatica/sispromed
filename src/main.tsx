@@ -4,7 +4,7 @@ import { RouterProvider } from "react-router";
 import { router } from "./routes";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
-const CLIENT_ID = "1";
+const CLIENT_ID = "102925296293-g9ajq5ddtcifqrm967hv16alt82hsa94.apps.googleusercontent.com";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <StrictMode>

@@ -1,13 +1,10 @@
 import axios from "axios";
-import {
-  getAccessToken,
-  getRefreshToken,
-  setTokens,
-  clearTokens,
-} from "./auth";
+import { getAccessToken, setAccessToken, clearAccessToken } from "./auth";
+import type { Acompanhamento } from "@/components/Acompanhamentos/columns";
 
 export const api = axios.create({
-  baseURL: "http://10.1.1.190:8080/",
+  baseURL: "http://localhost:8086",
+  withCredentials: true,
 });
 
 api.interceptors.request.use((config: any) => {
@@ -29,8 +26,14 @@ api.interceptors.response.use(
       return Promise.reject(error);
     }
 
+    if (originalRequest.url === "/refresh") {
+      clearAccessToken();
+      window.location.href = "/login";
+      return Promise.reject(error);
+    }
+
     if (originalRequest._retry) {
-      clearTokens();
+      clearAccessToken();
       window.location.href = "/login";
       return Promise.reject(error);
     }
@@ -38,38 +41,48 @@ api.interceptors.response.use(
     originalRequest._retry = true;
 
     try {
-      const refresh_token = getRefreshToken();
+      const { data } = await api.post("/refresh");
 
-      if (!refresh_token) {
-        throw new Error("Sem refresh token");
-      }
+      const newAccessToken = data.access_token;
 
-      const { data } = await axios.post("http://localhost:9000/refresh", {
-        refresh_token,
-      });
+      setAccessToken(newAccessToken);
 
-      setTokens(data);
-
-      originalRequest.headers.Authorization = `Bearer ${data.access_token}`;
+      originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
       return api(originalRequest);
     } catch (err) {
-      clearTokens();
+      clearAccessToken();
       window.location.href = "/login";
       return Promise.reject(err);
     }
   }
 );
 
-export const efetuarLogin = async (usuario: string, senha: string) => {
-  const { data } = await api.post("login", {
-    usuario,
+export const efetuarLogin = async (email: string, senha: string) => {
+  const { data } = await api.post("/login", {
+    email,
     senha,
   });
-  setTokens(data);
+
+  setAccessToken(data.access_token);
 };
 
-export const efetuarTeste = async () => {
-  const { data } = await api.get("teste");
+export const efetuarLoginGoogle = async (id_token: string) => {
+  const { data } = await api.post("/login/google", {
+    id_token,
+  });
+
+  setAccessToken(data.access_token);
+};
+
+export const efetuarLogout = async () => {
+  await api.post("/logout");
+
+  clearAccessToken();
+  window.location.href = "/login";
+};
+
+export const consultarAcompanhamentos = async (): Promise<Acompanhamento[]> => {
+  const { data } = await api.get("/acompanhamentos");
   return data;
 };
