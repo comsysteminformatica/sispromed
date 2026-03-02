@@ -1,6 +1,5 @@
 import axios from "axios";
 import { getAccessToken, setAccessToken, clearAccessToken } from "./auth";
-import type { Acompanhamento } from "@/components/Acompanhamentos/columns";
 import type { Convenio } from "@/types/convenio";
 import type { Paciente } from "@/types/paciente";
 import type { Clinica } from "@/types/clinica";
@@ -10,9 +9,11 @@ import type { TipoAcesso } from "@/types/tipoAcesso";
 import type { Lesao } from "@/types/lesao";
 import type { TratamentoRealizado } from "@/types/tratamentoRealizado";
 import type { Cateter } from "@/types/cateter";
+import type { Acompanhamento } from "@/types/acompanhamento";
+import type { FormFieldsPaciente } from "@/components/Modals/paciente";
 
 export const api = axios.create({
-  baseURL: "http://localhost:8086",
+  baseURL: "http://10.1.1.190:8086",
   withCredentials: true,
 });
 
@@ -135,12 +136,32 @@ export const excluirAcompanhamento = async (id: number): Promise<object> => {
   return data;
 };
 
+export const criarPaciente = async (
+  body: FormFieldsPaciente
+): Promise<object> => {
+  const { data } = await api.post("/pacientes", body);
+  return data;
+};
+
+export const editarPaciente = async (
+  id,
+  body: FormFieldsPaciente
+): Promise<object> => {
+  const { data } = await api.put("/pacientes", body);
+  return data;
+};
+
 export const consultarPacientes = async (
   search: string = ""
 ): Promise<Paciente[]> => {
   const { data } = await api.get("/pacientes", {
     params: { search },
   });
+  return data;
+};
+
+export const consultarPaciente = async (id: number): Promise<Paciente> => {
+  const { data } = await api.get(`/pacientes/${id}`);
   return data;
 };
 

@@ -119,24 +119,24 @@ export default function Acompanhamentos() {
     },
   ];
 
-  async function listarAcompanhamentos() {
+  async function listar() {
     const response = await consultarAcompanhamentos();
     setData(response);
   }
 
-  async function removerAcompanhamento(id: number) {
+  async function excluir(id: number) {
     try {
       const responseData = await excluirAcompanhamento(id);
       toast.success(responseData.message);
 
-      await listarAcompanhamentos();
+      await listar();
     } catch (error: any) {
       toast.error(error.message);
     }
   }
 
   useEffect(() => {
-    listarAcompanhamentos();
+    listar();
   }, []);
 
   return (
@@ -146,7 +146,7 @@ export default function Acompanhamentos() {
         setIsOpen={setIsModal}
         id={itemID}
         acao={acaoModal}
-        reload={listarAcompanhamentos}
+        reload={listar}
       />
 
       <Alerta
@@ -156,7 +156,7 @@ export default function Acompanhamentos() {
         titulo="ATENÇÃO!"
         descricao="Você tem certeza que deseja excluir um acompanhamento?"
         continuar="EXCLUIR"
-        onConfirm={() => removerAcompanhamento(itemID)}
+        onConfirm={() => excluir(itemID)}
       />
       <section className="flex">
         <div className="container mx-auto w-screen">

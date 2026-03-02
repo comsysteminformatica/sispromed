@@ -11,12 +11,12 @@ import { MoreHorizontal } from "lucide-react";
 
 export const columns: ColumnDef<Paciente>[] = [
   {
-    accessorKey: "nome",
-    header: "Nome",
-  },
-  {
     accessorKey: "cpf",
     header: "CPF",
+  },
+  {
+    accessorKey: "nome",
+    header: "Nome",
   },
   {
     accessorKey: "telefone",
