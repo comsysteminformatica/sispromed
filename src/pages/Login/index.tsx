@@ -39,7 +39,7 @@ export default function Login() {
     try {
       const { email, senha } = data;
       await efetuarLogin(email, senha);
-      navigate("/vascular/dashboard");
+      navigate("/vascular/acompanhamentos");
     } catch (error) {
       if (error instanceof AxiosError) {
         setError("root", {
@@ -72,12 +72,7 @@ export default function Login() {
             <section className="flex flex-col gap-2">
               <div className="flex flex-col gap-1">
                 <Label htmlFor="email">Email</Label>
-                <Input
-                  {...register("email")}
-                  id="email"
-                  type="email"
-                  value={"iran@local.com"}
-                />
+                <Input {...register("email")} id="email" type="email" />
                 {errors.email && (
                   <p className="text-red-500 text-sm">{errors.email.message}</p>
                 )}
@@ -89,7 +84,6 @@ export default function Login() {
                     {...register("senha")}
                     id="senha"
                     type={isMostrarSenha ? "text" : "password"}
-                    value={"12345678"}
                   />
                   <Button
                     variant="ghost"
@@ -133,9 +127,7 @@ export default function Login() {
             <section>
               <GoogleLogin
                 onSuccess={async (credentialResponse: any) => {
-                  await efetuarLoginGoogle(
-                    credentialResponse.credential,                    
-                  );
+                  await efetuarLoginGoogle(credentialResponse.credential);
                   navigate("/agenda");
                 }}
                 onError={() => console.error("Login failed")}

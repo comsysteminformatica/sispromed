@@ -98,23 +98,24 @@ export default function ModalPaciente({
       numero: "",
     },
   });
+  
   // const defaultValoresFormulario: FormFieldsPaciente = {
   //   cpf: "",
   //   nome: "",
   //   telefone: "",
   // };
 
-  const onSubmit: SubmitHandler<FormFieldsPaciente> = async (data) => {
+  async function onSubmit(data: z.infer<typeof formSchema>) {
     try {
       const { cpf, nome, telefone, uf, municipio, bairro, rua, numero } = data;
 
       console.log(data);
 
-      if (acao === "criar") {
-        await criarPaciente(data);
-      } else if (acao === "editar") {
-        await editarPaciente(id, data);
-      }
+      // if (acao === "criar") {
+      //   await criarPaciente(data);
+      // } else if (acao === "editar") {
+      //   await editarPaciente(id, data);
+      // }
 
       await reload();
       setIsOpen(false);
@@ -126,7 +127,7 @@ export default function ModalPaciente({
         });
       }
     }
-  };
+  }
 
   // useEffect(() => {
   //   if (acao === "editar" && id) {
@@ -149,113 +150,177 @@ export default function ModalPaciente({
               </DialogDescription>
             </DialogHeader>
 
-            {/* <Controller name="cpf" control={} /> */}
-
-            <Field>
-              <FieldLabel htmlFor="cpf">
-                CPF <span className="text-destructive">*</span>
-              </FieldLabel>
-              <Input {...register("cpf")} id="cpf" />
-              {errors.cpf && (
-                <p className="text-destructive text-sm">{errors.cpf.message}</p>
+            <Controller
+              name="cpf"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor={field.name}>
+                    CPF <span className="text-destructive">*</span>
+                  </FieldLabel>
+                  <Input
+                    {...field}
+                    id={field.name}
+                    aria-invalid={fieldState.invalid}
+                    autoComplete="off"
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
               )}
-            </Field>
+            />
 
-            <Field>
-              <FieldLabel htmlFor="nome">
-                Nome <span className="text-destructive">*</span>
-              </FieldLabel>
-              <Input {...register("nome")} id="nome" />
-              {errors.nome && (
-                <p className="text-destructive text-sm">
-                  {errors.nome.message}
-                </p>
+            <Controller
+              name="nome"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor={field.name}>
+                    Nome <span className="text-destructive">*</span>
+                  </FieldLabel>
+                  <Input
+                    {...field}
+                    id={field.name}
+                    aria-invalid={fieldState.invalid}
+                    autoComplete="off"
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
               )}
-            </Field>
+            />
 
-            <Field>
-              <FieldLabel htmlFor="telefone">
-                Telefone <span className="text-destructive">*</span>
-              </FieldLabel>
-              <Input {...register("telefone")} id="telefone" />
-              {errors.telefone && (
-                <p className="text-destructive text-sm">
-                  {errors.telefone.message}
-                </p>
+            <Controller
+              name="telefone"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor={field.name}>
+                    Telefone <span className="text-destructive">*</span>
+                  </FieldLabel>
+                  <Input
+                    {...field}
+                    id={field.name}
+                    aria-invalid={fieldState.invalid}
+                    autoComplete="off"
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
               )}
-            </Field>
+            />
 
-            <Field>
-              <FieldLabel>
-                UF <span className="text-destructive">*</span>
-              </FieldLabel>
-              <Select>
-                <SelectTrigger className="w-full max-w-48">
-                  <SelectValue placeholder="Selecione o estado" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Estados</SelectLabel>
-                    {ufs.map((uf) => (
-                      <SelectItem value={uf}>{uf}</SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-              {errors.uf && (
-                <p className="text-destructive text-sm">{errors.uf.message}</p>
+            <Controller
+              name="uf"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor={field.name}>
+                    UF <span className="text-destructive">*</span>
+                  </FieldLabel>
+                  <Input
+                    {...field}
+                    id={field.name}
+                    aria-invalid={fieldState.invalid}
+                    autoComplete="off"
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
               )}
-            </Field>
+            />
 
-            <Field>
-              <FieldLabel htmlFor="municipio">
-                Município <span className="text-destructive">*</span>
-              </FieldLabel>
-              <Input {...register("municipio")} id="municipio" />
-              {errors.municipio && (
-                <p className="text-destructive text-sm">
-                  {errors.municipio.message}
-                </p>
+            <Controller
+              name="municipio"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor={field.name}>
+                    Município <span className="text-destructive">*</span>
+                  </FieldLabel>
+                  <Input
+                    {...field}
+                    id={field.name}
+                    aria-invalid={fieldState.invalid}
+                    autoComplete="off"
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
               )}
-            </Field>
+            />
 
-            <Field>
-              <FieldLabel htmlFor="bairro">
-                Bairro <span className="text-destructive">*</span>
-              </FieldLabel>
-              <Input {...register("bairro")} id="bairro" />
-              {errors.bairro && (
-                <p className="text-destructive text-sm">
-                  {errors.bairro.message}
-                </p>
+            <Controller
+              name="bairro"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor={field.name}>
+                    Bairro <span className="text-destructive">*</span>
+                  </FieldLabel>
+                  <Input
+                    {...field}
+                    id={field.name}
+                    aria-invalid={fieldState.invalid}
+                    autoComplete="off"
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
               )}
-            </Field>
+            />
 
-            <Field>
-              <FieldLabel htmlFor="rua">
-                Rua <span className="text-destructive">*</span>
-              </FieldLabel>
-              <Input {...register("rua")} id="rua" />
-              {errors.rua && (
-                <p className="text-destructive text-sm">{errors.rua.message}</p>
+            <Controller
+              name="rua"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor={field.name}>
+                    Rua <span className="text-destructive">*</span>
+                  </FieldLabel>
+                  <Input
+                    {...field}
+                    id={field.name}
+                    aria-invalid={fieldState.invalid}
+                    autoComplete="off"
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
               )}
-            </Field>
+            />
 
-            <Field>
-              <FieldLabel htmlFor="numero">
-                Número <span className="text-destructive">*</span>
-              </FieldLabel>
-              <Input {...register("numero")} id="numero" />
-              {errors.numero && (
-                <p className="text-destructive text-sm">
-                  {errors.numero.message}
-                </p>
+            <Controller
+              name="numero"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor={field.name}>
+                    Número <span className="text-destructive">*</span>
+                  </FieldLabel>
+                  <Input
+                    {...field}
+                    id={field.name}
+                    aria-invalid={fieldState.invalid}
+                    autoComplete="off"
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
               )}
-            </Field>
+            />
 
-            {errors.root && (
+            {/* {errors.root && (
               <p className="text-destructive text-sm">{errors.root.message}</p>
-            )}
+            )} */}
 
             <DialogFooter>
               <DialogClose asChild>
@@ -263,8 +328,8 @@ export default function ModalPaciente({
                   Cancelar
                 </Button>
               </DialogClose>
-              <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting && (
+              <Button type="submit" disabled={form.formState.isSubmitting}>
+                {form.formState.isSubmitting && (
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 )}
                 Salvar
