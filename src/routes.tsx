@@ -11,7 +11,7 @@ import TiposAcesso from "./pages/Vascular/TiposAcesso";
 import Cateteres from "./pages/Vascular/Cateteres";
 import Lesoes from "./pages/Vascular/Lesoes";
 import Clinicas from "./pages/Vascular/Clinicas";
-import TratamentosRealizados from "./pages/Vascular/Tratamentos";
+import Tratamentos from "./pages/Vascular/Tratamentos";
 import Acompanhamentos from "./pages/Vascular/Acompanhamentos";
 
 export const router = createBrowserRouter([
@@ -45,8 +45,8 @@ export const router = createBrowserRouter([
       { path: "/vascular/cateteres", element: <Cateteres /> },
       { path: "/vascular/lesoes", element: <Lesoes /> },
       {
-        path: "/vascular/tratamentos-realizados",
-        element: <TratamentosRealizados />,
+        path: "/vascular/tratamentos",
+        element: <Tratamentos />,
       },
     ],
   },

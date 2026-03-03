@@ -7,7 +7,7 @@ import type { Medico } from "@/types/medico";
 import type { FormFieldsAcompanhamento } from "@/components/Modals/acompanhamento";
 import type { TipoAcesso } from "@/types/tipoAcesso";
 import type { Lesao } from "@/types/lesao";
-import type { TratamentoRealizado } from "@/types/tratamentoRealizado";
+import type { Tratamento } from "@/types/tratamento";
 import type { Cateter } from "@/types/cateter";
 import type { Acompanhamento } from "@/types/acompanhamento";
 import type { FormFieldsPaciente } from "@/components/Modals/paciente";
@@ -211,10 +211,10 @@ export const consultarLesoes = async (
   return data;
 };
 
-export const consultarTratamentosRealizados = async (
+export const consultarTratamentos = async (
   search: string = ""
-): Promise<TratamentoRealizado[]> => {
-  const { data } = await api.get("/tratamentos-realizados", {
+): Promise<Tratamento[]> => {
+  const { data } = await api.get("/tratamentos", {
     params: { search },
   });
   return data;

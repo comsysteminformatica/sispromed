@@ -2,17 +2,17 @@ import { DataTable } from "@/components/DataTable";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import {
-  consultarTratamentosRealizados,
+  consultarTratamentos,
 } from "@/service/api";
 import { columns } from "./columns";
-import type { TratamentoRealizado } from "@/types/tratamentoRealizado";
+import type { Tratamento } from "@/types/tratamento";
 
-export default function TratamentosRealizados() {
-  const [data, setData] = useState<TratamentoRealizado[]>([]);
+export default function Tratamentos() {
+  const [data, setData] = useState<Tratamento[]>([]);
 
-  async function listarTratamentosRealizados() {
+  async function listarTratamentos() {
     try {
-      const response = await consultarTratamentosRealizados();
+      const response = await consultarTratamentos();
       setData(response);
     } catch (error) {
       toast.error(error?.message);
@@ -20,7 +20,7 @@ export default function TratamentosRealizados() {
   }
 
   useEffect(() => {
-    listarTratamentosRealizados();
+    listarTratamentos();
   }, []);
 
   return (
@@ -30,7 +30,7 @@ export default function TratamentosRealizados() {
           <DataTable
             data={data}
             columns={columns}
-            emptyMessage={"Nenhum tratamento realizado encontrado."}
+            emptyMessage={"Nenhum tratamento encontrado."}
           />
         </div>
       </section>

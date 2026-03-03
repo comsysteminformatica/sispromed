@@ -5,11 +5,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import type { TratamentoRealizado } from "@/types/tratamentoRealizado";
+import type { Tratamento } from "@/types/tratamento";
 import type { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 
-export const columns: ColumnDef<TratamentoRealizado>[] = [
+export const columns: ColumnDef<Tratamento>[] = [
   {
     accessorKey: "nome",
     header: "Nome",

@@ -73,7 +73,7 @@ const items = [
   },
   {
     title: "Tratamentos",
-    url: "/vascular/tratamentos-realizados",
+    url: "/vascular/tratamentos",
     icon: Handshake,
   },
 ];

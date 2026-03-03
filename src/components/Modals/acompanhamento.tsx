@@ -29,7 +29,7 @@ import {
   consultarMedicos,
   consultarPacientes,
   consultarTiposAcessos,
-  consultarTratamentosRealizados,
+  consultarTratamentos,
   criarAcompanhamento,
   editarAcompanhamento,
 } from "@/service/api";
@@ -82,7 +82,7 @@ const formSchema = z.object({
   lesao_50: z.boolean().default(false),
   alteracao_clinica: z.boolean().default(false),
   lesoes: z.array(z.number()).min(1, "Selecione ao menos uma"),
-  tratamentos_realizados: z.array(z.number()).min(1, "Selecione ao menos um"),
+  tratamentos: z.array(z.number()).min(1, "Selecione ao menos um"),
   observacoes: z.string().toUpperCase().optional(),
 });
 
@@ -96,7 +96,7 @@ const defaultValoresFormulario: FormFieldsAcompanhamento = {
   tipo_acesso_id: null,
   cateter_id: null,
   lesoes: [],
-  tratamentos_realizados: [],
+  tratamentos: [],
   lesao_50: false,
   alteracao_clinica: false,
   situacao_clinica: "",
@@ -153,8 +153,8 @@ export default function ModalAcompanhamento({
           tipo_acesso_id: res.tipo_acesso?.id ?? null,
           cateter_id: res.cateter?.id ?? null,
           lesoes: res.lesoes?.map((l: OpcaoSelect) => l.id) ?? [],
-          tratamentos_realizados:
-            res.tratamentos_realizados?.map((t: OpcaoSelect) => t.id) ?? [],
+          tratamentos:
+            res.tratamentos?.map((t: OpcaoSelect) => t.id) ?? [],
         });
       } catch (error) {
         console.error("Erro ao carregar acompanhamento:", error);
@@ -171,7 +171,7 @@ export default function ModalAcompanhamento({
       const payload = {
         ...values,
         lesoes: values.lesoes.map((id) => ({ id })),
-        tratamentos_realizados: values.tratamentos_realizados.map((id) => ({
+        tratamentos: values.tratamentos.map((id) => ({
           id,
         })),
       };
@@ -481,12 +481,12 @@ export default function ModalAcompanhamento({
           />
 
           <Controller
-            name="tratamentos_realizados"
+            name="tratamentos"
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
                 <FieldLabel>
-                  Tratamentos Realizados{" "}
+                  Tratamentos
                   <span className="text-destructive">*</span>
                 </FieldLabel>
                 <FormAsyncSelect
@@ -494,8 +494,8 @@ export default function ModalAcompanhamento({
                   placeholder="Buscar tratamentos..."
                   value={field.value}
                   onChange={field.onChange}
-                  fetchFn={consultarTratamentosRealizados}
-                  initialData={initialRecord?.tratamentos_realizados}
+                  fetchFn={consultarTratamentos}
+                  initialData={initialRecord?.tratamentos}
                 />
                 <FieldError errors={[fieldState.error]} />
               </Field>
