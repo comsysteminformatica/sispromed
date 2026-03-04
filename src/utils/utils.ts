@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 export const ufs = [
   "AC",
   "AL",
@@ -27,3 +29,14 @@ export const ufs = [
   "SE",
   "BA",
 ];
+
+export function useDebounce(value: string, delay = 500) {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => setDebouncedValue(value), delay);
+    return () => clearTimeout(handler);
+  }, [value, delay]);
+
+  return debouncedValue;
+}

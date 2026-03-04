@@ -5,11 +5,11 @@ import { Outlet } from "react-router";
 export default function AppLayout() {
   return (
     <SidebarProvider>
-      <div className="flex">
+      <div className="flex flex-1">
         <AppSidebar />
         <SidebarTrigger />
 
-        <main className="flex-1 p-6">
+        <main className="flex-1">
           <Outlet />
         </main>
       </div>

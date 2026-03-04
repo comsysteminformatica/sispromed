@@ -104,8 +104,13 @@ export const efetuarLogout = async () => {
   window.location.href = "/login";
 };
 
-export const consultarAcompanhamentos = async (): Promise<Acompanhamento[]> => {
-  const { data } = await api.get("/acompanhamentos");
+export const consultarAcompanhamentos = async (
+  filtro = "",
+  busca = ""
+): Promise<object> => {
+  const { data } = await api.get(
+    `/acompanhamentos?&q=${busca}&filterBy=${filtro}`
+  );
   return data;
 };
 

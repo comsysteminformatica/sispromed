@@ -19,6 +19,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { useLocation } from "react-router";
 
 const items = [
   // {
@@ -79,6 +80,8 @@ const items = [
 ];
 
 export function AppSidebar() {
+  const { pathname } = useLocation();
+
   return (
     <Sidebar collapsible="icon">
       <SidebarContent>
@@ -86,16 +89,28 @@ export function AppSidebar() {
           <SidebarGroupLabel>SISPROMED</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {items.map((item) => {
+                const active = pathname === item.url;
+                return (
+                  <SidebarMenuItem
+                    key={item.title}
+                    className={active && "bg-primary text-white rounded-md"}
+                  >
+                    <SidebarMenuButton
+                      asChild
+                      className={active && "hover:bg-primary hover:text-white"}
+                    >
+                      <a
+                        href={item.url}
+                        aria-current={active ? "page" : undefined}
+                      >
+                        <item.icon className="mr-2" />
+                        <span>{item.title}</span>
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
