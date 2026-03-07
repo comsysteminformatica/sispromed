@@ -15,7 +15,7 @@ import { MoreHorizontal } from "lucide-react";
 import FiltroTable from "@/components/filtro-table";
 import ModalClinica from "@/components/Modals/clinica";
 
-type StatusFiltro = "TODOS" | "NOME";
+type StatusFiltro = "Todos" | "Nome";
 
 export default function Clinicas() {
   const [data, setData] = useState<Clinica[]>([]);
@@ -23,7 +23,7 @@ export default function Clinicas() {
   const [acaoModal, setAcaoModal] = useState<"criar" | "editar">("criar");
   const [isModal, setIsModal] = useState(false);
   const [itemID, setItemID] = useState(0);
-  const [statusFiltro, setStatusFiltro] = useState<StatusFiltro>("TODOS");
+  const [statusFiltro, setStatusFiltro] = useState<StatusFiltro>("Todos");
 
   const columns: ColumnDef<Clinica>[] = [
     {
@@ -65,7 +65,7 @@ export default function Clinicas() {
     try {
       const response = await consultarClinicas(
         busca?.toUpperCase(),
-        statusFiltro
+        statusFiltro?.toUpperCase()
       );
       setData(response);
     } catch (error) {
@@ -82,11 +82,11 @@ export default function Clinicas() {
         reload={listar}
         id={itemID}
       />
-      
+
       <main>
         <section className="flex justify-between pb-1">
           <FiltroTable
-            filtros={["TODOS", "NOME"]}
+            filtros={["Todos", "Nome"]}
             busca={busca}
             setBusca={setBusca}
             statusFiltro={statusFiltro}

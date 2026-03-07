@@ -15,6 +15,8 @@ import type { FormFieldsConvenio } from "@/components/Modals/convenio";
 import type { FormFieldsClinica } from "@/components/Modals/clinica";
 import type { FormFieldsTipoAcesso } from "@/components/Modals/tipo-acesso";
 import type { FormFieldsLesao } from "@/components/Modals/lesao";
+import type { FormFieldsTratamento } from "@/components/Modals/tratamento";
+import type { DashboardVascular } from "@/types/dashboardVascular";
 
 export const api = axios.create({
   baseURL: "http://localhost:8086",
@@ -84,13 +86,17 @@ api.interceptors.response.use(
   }
 );
 
-export const efetuarLogin = async (email: string, senha: string) => {
+export const efetuarLogin = async (
+  email: string,
+  senha: string
+): Promise<string> => {
   const { data } = await api.post("/login", {
     email,
     senha,
   });
 
   setAccessToken(data.access_token);
+  return data.nome;
 };
 
 export const efetuarLoginGoogle = async (id_token: string) => {
@@ -308,14 +314,12 @@ export const consultarLesao = async (id: number): Promise<Lesao> => {
   return data;
 };
 
-export const criarLesao = async (
-  body: FormFieldsLesao
-): Promise<object> => {
+export const criarLesao = async (body: FormFieldsLesao): Promise<object> => {
   const { data } = await api.post("/lesoes", body);
   return data;
 };
 
-export const editarLesao= async (
+export const editarLesao = async (
   id: number,
   body: FormFieldsLesao
 ): Promise<object> => {
@@ -333,6 +337,26 @@ export const consultarTratamentos = async (
   return data;
 };
 
+export const consultarTratamento = async (id: number): Promise<Tratamento> => {
+  const { data } = await api.get(`/tratamentos/${id}`);
+  return data;
+};
+
+export const criarTratamento = async (
+  body: FormFieldsTratamento
+): Promise<object> => {
+  const { data } = await api.post("/tratamentos", body);
+  return data;
+};
+
+export const editarTratamento = async (
+  id: number,
+  body: FormFieldsTratamento
+): Promise<object> => {
+  const { data } = await api.put(`/tratamentos/${id}`, body);
+  return data;
+};
+
 export const consultarCateteres = async (
   q = "",
   category = ""
@@ -342,3 +366,9 @@ export const consultarCateteres = async (
   });
   return data;
 };
+
+export const consultarDashboardVascular =
+  async (): Promise<DashboardVascular> => {
+    const { data } = await api.get("vascular/dashboard");
+    return data;
+  };

@@ -18,6 +18,7 @@ import { Loader2 } from "lucide-react";
 
 import { useEffect } from "react";
 import { toast } from "sonner";
+import { consultarTratamento, criarTratamento, editarTratamento } from "@/service/api";
 
 type ModalTratamentoProps = {
   isOpen: boolean;
@@ -55,14 +56,17 @@ export default function ModalTratamento({
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
     try {
+      let response: object;
+
       if (acao === "criar") {
-        await criarTratamento(data);
+        response = await criarTratamento(data);
       } else if (acao === "editar") {
-        await editarTratamento(id, data);
+        response = await editarTratamento(id, data);
       }
 
       await reload();
       setIsOpen(false);
+      toast.success(response.message);
     } catch (error) {
       if (error instanceof AxiosError) {
         toast.error(

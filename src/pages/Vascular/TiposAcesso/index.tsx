@@ -16,14 +16,14 @@ import { MoreHorizontal } from "lucide-react";
 import FiltroTable from "@/components/filtro-table";
 import ModalTipoAcesso from "@/components/Modals/tipo-acesso";
 
-type StatusFiltro = "TODOS" | "NOME";
+type StatusFiltro = "Todos" | "Nome";
 
 export default function TiposAcesso() {
   const [data, setData] = useState<Medico[]>([]);
   const [busca, setBusca] = useState("");
   const [acaoModal, setAcaoModal] = useState<"criar" | "editar">("criar");
   const [isModal, setIsModal] = useState(false);
-  const [statusFiltro, setStatusFiltro] = useState<StatusFiltro>("TODOS");
+  const [statusFiltro, setStatusFiltro] = useState<StatusFiltro>("Todos");
   const [itemID, setItemID] = useState(0);
 
   const columns: ColumnDef<TipoAcesso>[] = [
@@ -62,11 +62,11 @@ export default function TiposAcesso() {
     },
   ];
 
-  async function listar(busca: string = "", filtro: string = "") {
+  async function listar(busca: string = "", statusFiltro: string = "") {
     try {
       const response = await consultarTiposAcessos(
         busca?.toUpperCase(),
-        filtro
+        statusFiltro?.toUpperCase()
       );
       setData(response);
     } catch (error) {
@@ -86,7 +86,7 @@ export default function TiposAcesso() {
       <main>
         <section className="flex justify-between pb-1">
           <FiltroTable
-            filtros={["TODOS", "NOME"]}
+            filtros={["Todos", "Nome"]}
             busca={busca}
             setBusca={setBusca}
             statusFiltro={statusFiltro}

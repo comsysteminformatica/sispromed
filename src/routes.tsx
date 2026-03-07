@@ -42,7 +42,7 @@ export const router = createBrowserRouter([
       { path: "/vascular/clinicas", element: <Clinicas /> },
       { path: "/vascular/nefrologistas", element: <Nefrologistas /> },
       { path: "/vascular/tipos-acesso", element: <TiposAcesso /> },
-      { path: "/vascular/cateteres", element: <Cateteres /> },
+      // { path: "/vascular/cateteres", element: <Cateteres /> },
       { path: "/vascular/lesoes", element: <Lesoes /> },
       {
         path: "/vascular/tratamentos",

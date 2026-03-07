@@ -19,7 +19,7 @@ import { AxiosError } from "axios";
 import FiltroTable from "@/components/filtro-table";
 
 type StatusFiltro =
-  | "TODOS"
+  | "Todos"
   | "PACIENTE"
   | "CONVENIO"
   | "CLINICA"
@@ -32,7 +32,7 @@ export default function Acompanhamentos() {
   const [isModalExcluir, setIsModalExcluir] = useState(false);
   const [acaoModal, setAcaoModal] = useState<"criar" | "editar" | undefined>();
   const [itemID, setItemID] = useState(0);
-  const [statusFiltro, setStatusFiltro] = useState<StatusFiltro>("TODOS");
+  const [statusFiltro, setStatusFiltro] = useState<StatusFiltro>("Todos");
 
   const columns: ColumnDef<Acompanhamento>[] = [
     { accessorKey: "paciente", header: "Paciente" },
@@ -49,6 +49,7 @@ export default function Acompanhamentos() {
           : "-",
     },
     { accessorKey: "tipo_de_acesso", header: "Tipo de Acesso" },
+    { accessorKey: "cateter", header: "Cateter" },
     {
       accessorKey: "ultimo_usv",
       header: "Último USV",
@@ -104,7 +105,10 @@ export default function Acompanhamentos() {
 
   async function listar(busca: string = "", statusFiltro: string = "") {
     try {
-      const response = await consultarAcompanhamentos(busca?.toUpperCase(), statusFiltro);
+      const response = await consultarAcompanhamentos(
+        busca?.toUpperCase(),
+        statusFiltro?.toUpperCase()
+      );
       setData(response);
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -149,11 +153,11 @@ export default function Acompanhamentos() {
         <section className="flex justify-between pb-1">
           <FiltroTable
             filtros={[
-              "TODOS",
-              "PACIENTE",
-              "CONVENIO",
-              "CLINICA",
-              "NEFROLOGISTA",
+              "Todos",
+              "Paciente",
+              "Convênio",
+              "Clínica",
+              "Nefrologista",
             ]}
             busca={busca}
             setBusca={setBusca}

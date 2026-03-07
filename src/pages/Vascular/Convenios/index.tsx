@@ -15,7 +15,7 @@ import { MoreHorizontal } from "lucide-react";
 import FiltroTable from "@/components/filtro-table";
 import ModalConvenio from "@/components/Modals/convenio";
 
-type StatusFiltro = "TODOS" | "NOME";
+type StatusFiltro = "Todos" | "Nome";
 
 export default function Convenios() {
   const [data, setData] = useState<Convenio[]>([]);
@@ -23,7 +23,7 @@ export default function Convenios() {
   const [acaoModal, setAcaoModal] = useState<"criar" | "editar">("criar");
   const [itemID, setItemID] = useState(0);
   const [isModal, setIsModal] = useState(false);
-  const [statusFiltro, setStatusFiltro] = useState<StatusFiltro>("TODOS");
+  const [statusFiltro, setStatusFiltro] = useState<StatusFiltro>("Todos");
 
   const columns: ColumnDef<Convenio>[] = [
     {
@@ -65,7 +65,7 @@ export default function Convenios() {
     try {
       const response = await consultarConvenios(
         busca?.toUpperCase(),
-        statusFiltro
+        statusFiltro?.toUpperCase()
       );
       setData(response);
     } catch (error) {
@@ -85,7 +85,7 @@ export default function Convenios() {
       <main>
         <section className="flex justify-between pb-1">
           <FiltroTable
-            filtros={["TODOS", "NOME"]}
+            filtros={["Todos", "Nome"]}
             busca={busca}
             setBusca={setBusca}
             statusFiltro={statusFiltro}

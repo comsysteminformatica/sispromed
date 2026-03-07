@@ -32,13 +32,13 @@ export default function FiltroTable({
   const debouncedBusca = useDebounce(busca, 500);
 
   useEffect(() => {
-    if (statusFiltro !== "TODOS" && !busca) return;
+    if (statusFiltro !== "Todos" && !busca) return;
 
     listar(debouncedBusca, statusFiltro);
   }, [debouncedBusca, statusFiltro]);
 
   useEffect(() => {
-    if (statusFiltro !== "TODOS") {
+    if (statusFiltro !== "Todos") {
       setTimeout(() => {
         inputRefBusca.current?.focus();
       }, 200);
@@ -50,7 +50,7 @@ export default function FiltroTable({
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline">
-            {statusFiltro === "TODOS" ? "Filtrar por" : statusFiltro}
+            {statusFiltro === "Todos" ? "Filtrar por" : statusFiltro}
             <ChevronDown className="ml-2 h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
@@ -62,18 +62,18 @@ export default function FiltroTable({
               onClick={() => {
                 setStatusFiltro(status);
 
-                if (status === "TODOS") {
+                if (status === "Todos") {
                   setBusca("");
                 }
               }}
             >
-              {status === "TODOS" ? "Todos" : status}
+              {status === "Todos" ? "Todos" : status}
             </DropdownMenuItem>
           ))}
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {statusFiltro !== "TODOS" && (
+      {statusFiltro !== "Todos" && (
         <Input
           placeholder="Buscar..."
           className="w-100"

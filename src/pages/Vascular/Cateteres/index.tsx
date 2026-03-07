@@ -3,25 +3,15 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { consultarCateteres } from "@/service/api";
 import type { Cateter } from "@/types/cateter";
-import { Button } from "@/components/ui/button";
 import FiltroTable from "@/components/filtro-table";
 import type { ColumnDef } from "@tanstack/react-table";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { MoreHorizontal } from "lucide-react";
 
-type StatusFiltro = "TODOS" | "TIPO" | "MARCA";
+type StatusFiltro = "Todos" | "Tipo" | "Marca";
 
 export default function Cateteres() {
   const [data, setData] = useState<Cateter[]>([]);
   const [busca, setBusca] = useState("");
-  const [acaoModal, setAcaoModal] = useState<"criar" | "editar">("criar");
-  const [isModal, setIsModal] = useState(false);
-  const [statusFiltro, setStatusFiltro] = useState<StatusFiltro>("TODOS");
+  const [statusFiltro, setStatusFiltro] = useState<StatusFiltro>("Todos");
 
   const columns: ColumnDef<Cateter>[] = [
     {
@@ -38,7 +28,7 @@ export default function Cateteres() {
     try {
       const response = await consultarCateteres(
         busca?.toUpperCase(),
-        statusFiltro
+        statusFiltro?.toUpperCase()
       );
       setData(response);
     } catch (error) {
@@ -51,7 +41,7 @@ export default function Cateteres() {
       <main>
         <section className="pb-1">
           <FiltroTable
-            filtros={["TODOS", "TIPO", "MARCA"]}
+            filtros={["Todos", "Tipo", "Marca"]}
             busca={busca}
             setBusca={setBusca}
             statusFiltro={statusFiltro}

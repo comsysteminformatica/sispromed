@@ -15,13 +15,13 @@ import type { ColumnDef } from "@tanstack/react-table";
 import FiltroTable from "@/components/filtro-table";
 import ModalNefrologista from "@/components/Modals/nefrologista";
 
-type StatusFiltro = "TODOS" | "NOME";
+type StatusFiltro = "Todos" | "Nome";
 
 export default function Nefrologistas() {
   const [data, setData] = useState<Medico[]>([]);
   const [isModal, setIsModal] = useState(false);
   const [acaoModal, setAcaoModal] = useState<"criar" | "editar">("criar");
-  const [statusFiltro, setStatusFiltro] = useState<StatusFiltro>("TODOS");
+  const [statusFiltro, setStatusFiltro] = useState<StatusFiltro>("Todos");
   const [busca, setBusca] = useState("");
   const [itemID, setItemID] = useState(0);
 
@@ -66,7 +66,7 @@ export default function Nefrologistas() {
       const response = await consultarMedicos(
         1,
         busca?.toUpperCase(),
-        statusFiltro
+        statusFiltro?.toUpperCase()
       );
       setData(response);
     } catch (error) {
@@ -86,7 +86,7 @@ export default function Nefrologistas() {
       <main>
         <section className="flex justify-between pb-1">
           <FiltroTable
-            filtros={["TODOS", "NOME"]}
+            filtros={["Todos", "Nome"]}
             busca={busca}
             setBusca={setBusca}
             statusFiltro={statusFiltro}

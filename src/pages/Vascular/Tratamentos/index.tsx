@@ -13,16 +13,16 @@ import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
 import type { ColumnDef } from "@tanstack/react-table";
 import FiltroTable from "@/components/filtro-table";
-import ModalNefrologista from "@/components/Modals/nefrologista";
+import ModalTratamento from "@/components/Modals/tratamento";
 
-type StatusFiltro = "TODOS" | "NOME";
+type StatusFiltro = "Todos" | "Nome";
 
 export default function Tratamentos() {
   const [data, setData] = useState<Tratamento[]>([]);
   const [busca, setBusca] = useState("");
   const [acaoModal, setAcaoModal] = useState<"criar" | "editar">("criar");
   const [isModal, setIsModal] = useState(false);
-  const [statusFiltro, setStatusFiltro] = useState<StatusFiltro>("TODOS");
+  const [statusFiltro, setStatusFiltro] = useState<StatusFiltro>("Todos");
   const [itemID, setItemID] = useState(0);
 
   const columns: ColumnDef<Tratamento>[] = [
@@ -65,7 +65,7 @@ export default function Tratamentos() {
     try {
       const response = await consultarTratamentos(
         busca?.toUpperCase(),
-        statusFiltro
+        statusFiltro?.toUpperCase()
       );
       setData(response);
     } catch (error) {
@@ -75,7 +75,7 @@ export default function Tratamentos() {
 
   return (
     <>
-      <ModalNefrologista
+      <ModalTratamento
         acao={acaoModal}
         isOpen={isModal}
         setIsOpen={setIsModal}
@@ -85,7 +85,7 @@ export default function Tratamentos() {
       <main>
         <section className="flex justify-between pb-1">
           <FiltroTable
-            filtros={["TODOS", "NOME"]}
+            filtros={["Todos", "Nome"]}
             busca={busca}
             setBusca={setBusca}
             statusFiltro={statusFiltro}

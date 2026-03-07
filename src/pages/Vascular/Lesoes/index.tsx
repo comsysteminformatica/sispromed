@@ -15,14 +15,14 @@ import {
 import { MoreHorizontal } from "lucide-react";
 import ModalLesao from "@/components/Modals/lesao";
 
-type StatusFiltro = "TODOS" | "NOME";
+type StatusFiltro = "Todos" | "Nome";
 
 export default function Lesoes() {
   const [data, setData] = useState<Lesao[]>([]);
   const [busca, setBusca] = useState("");
   const [acaoModal, setAcaoModal] = useState<"criar" | "editar">("criar");
   const [isModal, setIsModal] = useState(false);
-  const [statusFiltro, setStatusFiltro] = useState<StatusFiltro>("TODOS");
+  const [statusFiltro, setStatusFiltro] = useState<StatusFiltro>("Todos");
   const [itemID, setItemID] = useState(0);
 
   const columns: ColumnDef<Lesao>[] = [
@@ -65,7 +65,7 @@ export default function Lesoes() {
     try {
       const response = await consultarLesoes(
         busca?.toUpperCase(),
-        statusFiltro
+        statusFiltro?.toUpperCase()
       );
       setData(response);
     } catch (error) {
@@ -85,7 +85,7 @@ export default function Lesoes() {
       <main>
         <section className="flex justify-between pb-1">
           <FiltroTable
-            filtros={["TODOS", "NOME"]}
+            filtros={["Todos", "Nome"]}
             busca={busca}
             setBusca={setBusca}
             statusFiltro={statusFiltro}

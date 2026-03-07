@@ -17,7 +17,7 @@ import { formatarCPF, formatarTelefone } from "@/utils/format";
 import { AxiosError } from "axios";
 import FiltroTable from "@/components/filtro-table";
 
-type StatusFiltro = "TODOS" | "NOME";
+type StatusFiltro = "Todos" | "Nome";
 
 export default function Pacientes() {
   const [data, setData] = useState<Paciente[]>([]);
@@ -25,7 +25,7 @@ export default function Pacientes() {
   const [acaoModal, setAcaoModal] = useState<"criar" | "editar">("criar");
   const [itemID, setItemID] = useState(0);
   const [busca, setBusca] = useState("");
-  const [statusFiltro, setStatusFiltro] = useState<StatusFiltro>("TODOS");
+  const [statusFiltro, setStatusFiltro] = useState<StatusFiltro>("Todos");
 
   const columns: ColumnDef<Paciente>[] = [
     {
@@ -101,7 +101,7 @@ export default function Pacientes() {
     try {
       const response = await consultarPacientes(
         busca?.toUpperCase(),
-        statusFiltro
+        statusFiltro?.toUpperCase()
       );
       setData(response);
     } catch (error) {
@@ -125,7 +125,7 @@ export default function Pacientes() {
       <main>
         <section className="flex justify-between pb-1">
           <FiltroTable
-            filtros={["TODOS", "NOME"]}
+            filtros={["Todos", "Nome"]}
             busca={busca}
             setBusca={setBusca}
             statusFiltro={statusFiltro}

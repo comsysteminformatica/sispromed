@@ -18,8 +18,15 @@ import {
   editarPaciente,
 } from "@/service/api";
 import { AxiosError } from "axios";
-import { Field, FieldContent, FieldError, FieldLabel } from "../ui/field";
-import { Loader2, LucideToggleLeft } from "lucide-react";
+import {
+  Field,
+  FieldContent,
+  FieldError,
+  FieldLabel,
+  FieldLegend,
+  FieldSet,
+} from "../ui/field";
+import { Loader2 } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -31,6 +38,7 @@ import { ufs } from "@/utils/utils";
 import { formatarTelefone, formatarCPF } from "@/utils/format";
 import { useEffect } from "react";
 import { toast } from "sonner";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 
 type ModalPacienteProps = {
   isOpen: boolean;
@@ -47,6 +55,8 @@ const formSchema = z.object({
     .min(3, "O nome deve ter no mínimo 3 caracteres")
     .max(45, "O nome deve ter no máximo 45 caracteres")
     .toUpperCase(),
+  genero: z.string().min(1, "Obrigatório"),
+  data_nascimento: z.string().min(1, "Obrigatório"),
   telefone: z
     .string()
     .min(10, "O telefone deve ter no mínimo 10 caracteres")
@@ -79,6 +89,8 @@ export type FormFieldsPaciente = z.infer<typeof formSchema>;
 const defaultValoresFormulario: FormFieldsPaciente = {
   cpf: "",
   nome: "",
+  genero: "",
+  data_nascimento: "",
   telefone: "",
   uf: "",
   municipio: "",
@@ -135,6 +147,8 @@ export default function ModalPaciente({
           ...res,
           cpf: res.cpf,
           nome: res.nome,
+          genero: res.genero,
+          data_nascimento: res.data_nascimento,
           telefone: res.telefone,
           uf: res.uf,
           bairro: res.bairro,
@@ -152,7 +166,10 @@ export default function ModalPaciente({
     <>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-1 p-1"
+          >
             <DialogHeader>
               <DialogTitle>
                 {acao === "criar" ? "Novo Paciente" : "Editar Paciente"}
@@ -213,32 +230,93 @@ export default function ModalPaciente({
             />
 
             <Controller
-              name="telefone"
+              name="genero"
               control={form.control}
               render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor={field.name}>
-                    Telefone <span className="text-destructive">*</span>
-                  </FieldLabel>
-                  <Input
-                    {...field}
-                    value={formatarTelefone(field.value)}
-                    onChange={(e) => {
-                      const onlyDigits = e.target.value.replace(/\D/g, "");
-                      field.onChange(onlyDigits);
-                    }}
-                    maxLength={15}
-                    placeholder="(00) 00000-0000"
-                    id={field.name}
-                    aria-invalid={fieldState.invalid}
-                    autoComplete="off"
-                  />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
+                <FieldSet>
+                  <FieldLegend variant="label">
+                    Gênero <span className="text-destructive">*</span>
+                  </FieldLegend>
+                  <RadioGroup name={field.name} value={field.value} onValueChange={field.onChange}>
+                    <Field
+                      orientation="horizontal"
+                      data-invalid={fieldState.invalid}
+                      className="gap-x-1"
+                    >
+                      <RadioGroupItem
+                        value="M"
+                        id="masculino"
+                        aria-invalid={fieldState.invalid}
+                      />
+                      <FieldLabel htmlFor="masculino" className="font-normal">
+                        Masculino
+                      </FieldLabel>
+                    </Field>
+                    <Field
+                      orientation="horizontal"
+                      data-invalid={fieldState.invalid}
+                      className="gap-x-1"
+                    >
+                      <RadioGroupItem
+                        value="F"
+                        id="Feminino"
+                        aria-invalid={fieldState.invalid}
+                      />
+                      <FieldLabel htmlFor="Feminino" className="font-normal">
+                        Feminino
+                      </FieldLabel>
+                    </Field>
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </RadioGroup>
+                </FieldSet>
               )}
             />
+
+            <section className="grid grid-cols-2 gap-x-2">
+              <Controller
+                name="data_nascimento"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel>
+                      Data de Nascimento{" "}
+                      <span className="text-destructive">*</span>
+                    </FieldLabel>
+                    <Input type="date" {...field} />
+                    <FieldError errors={[fieldState.error]} />
+                  </Field>
+                )}
+              />
+              <Controller
+                name="telefone"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor={field.name}>
+                      Telefone <span className="text-destructive">*</span>
+                    </FieldLabel>
+                    <Input
+                      {...field}
+                      value={formatarTelefone(field.value)}
+                      onChange={(e) => {
+                        const onlyDigits = e.target.value.replace(/\D/g, "");
+                        field.onChange(onlyDigits);
+                      }}
+                      maxLength={15}
+                      placeholder="(00) 00000-0000"
+                      id={field.name}
+                      aria-invalid={fieldState.invalid}
+                      autoComplete="off"
+                    />
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )}
+              />
+            </section>
 
             <section className="grid grid-cols-4 gap-x-2">
               <div className="col-span-1">
