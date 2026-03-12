@@ -11,4 +11,5 @@ export type Paciente = {
   bairro: string;
   rua: string;
   numero: string;
+  ativo: boolean;
 };

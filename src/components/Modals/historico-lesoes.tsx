@@ -21,6 +21,7 @@ import {
 } from "@/service/api";
 import ModalLesaoAcompanhamento from "./lesao-acompanhamento";
 import { toast } from "sonner";
+import { formatarDataISOParaBR } from "@/utils/format";
 
 type ModalHistoricoLesoesProps = {
   isOpen: boolean;
@@ -97,9 +98,9 @@ export default function ModalHistoricoLesoes({
               <CardHeader>
                 <CardDescription className="flex gap-x-1">
                   <Calendar size={20} />
-                  {item.data?.split("-").reverse().join("/")}
+                  {formatarDataISOParaBR(item.data)}
                 </CardDescription>
-                <CardTitle className="mt-2">{item.nome}</CardTitle>
+                <CardTitle>{item.nome}</CardTitle>
                 <CardDescription>{item.observacao}</CardDescription>
                 <CardAction>
                   <Button variant={"ghost"} onClick={() => editar(item.id)}>

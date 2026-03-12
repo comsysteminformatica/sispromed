@@ -26,6 +26,7 @@ import ModalHistoricoLesoes from "@/components/Modals/historico-lesoes";
 import ModalHistoricoTratamentos from "@/components/Modals/historico-tratamentos";
 import { Badge } from "@/components/ui/badge";
 import FiltrarTable from "@/components/filtrar-table";
+import { formatarDataISOParaBR } from "@/utils/format";
 
 type StatusBusca =
   | "Todos"
@@ -168,7 +169,7 @@ export default function Acompanhamentos() {
       header: "Último Acesso",
       cell: ({ row }) =>
         row.original.ultimo_acesso
-          ? row.original.ultimo_acesso.split("-").reverse().join("/")
+          ? formatarDataISOParaBR(row.original.ultimo_acesso)
           : "-",
     },
     { accessorKey: "tipo_de_acesso", header: "Tipo de Acesso" },
@@ -185,7 +186,7 @@ export default function Acompanhamentos() {
           <div>
             <Badge variant={variant} className={`px-2 py-1 rounded-md`}>
               {row.original.ultimo_usv
-                ? row.original.ultimo_usv.split("-").reverse().join("/")
+                ? formatarDataISOParaBR(row.original.ultimo_usv)
                 : "-"}
             </Badge>
           </div>

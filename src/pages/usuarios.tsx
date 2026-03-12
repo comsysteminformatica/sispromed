@@ -1,16 +1,28 @@
 import { DataTable } from "@/components/data-table";
+import ModalUsuario from "@/components/Modals/usuario";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { consultarUsuarios } from "@/service/api";
 import type { AxiosError } from "axios";
+import { MoreHorizontal, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
-import { redirect, useNavigate } from "react-router";
-import { toast } from "sonner";
+import { useNavigate } from "react-router";
 
 export default function Usuarios() {
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(false);
   const [usuarios, setUsuarios] = useState([]);
+
+  const [isModal, setIsModal] = useState(false);
+  const [itemID, setItemID] = useState(0);
+  const [acaoModal, setAcaoModal] = useState<"criar" | "editar">("criar");
 
   const columns = [
     {
@@ -41,35 +53,35 @@ export default function Usuarios() {
       accessorKey: "perfil",
       header: "Perfil",
     },
-    // {
-    //   id: "actions",
-    //   cell: ({ row }) => {
-    //     return (
-    //       <DropdownMenu>
-    //         <DropdownMenuTrigger asChild>
-    //           <Button
-    //             variant="ghost"
-    //             className="h-8 w-8 p-0 flex justify-self-end"
-    //           >
-    //             <span className="sr-only">Abrir menu</span>
-    //             <MoreHorizontal className="h-4 w-4" />
-    //           </Button>
-    //         </DropdownMenuTrigger>
-    //         <DropdownMenuContent align="end">
-    //           <DropdownMenuItem
-    //             onClick={() => {
-    //               setAcaoModal("editar");
-    //               setItemID(row.original.id);
-    //               setIsModal(true);
-    //             }}
-    //           >
-    //             Editar
-    //           </DropdownMenuItem>
-    //         </DropdownMenuContent>
-    //       </DropdownMenu>
-    //     );
-    //   },
-    // },
+    {
+      id: "actions",
+      cell: ({ row }) => {
+        return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                className="h-8 w-8 p-0 flex justify-self-end"
+              >
+                <span className="sr-only">Abrir menu</span>
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem
+                onClick={() => {
+                  setAcaoModal("editar");
+                  setItemID(row.original.id);
+                  setIsModal(true);
+                }}
+              >
+                Editar
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        );
+      },
+    },
   ];
 
   async function listar() {
@@ -97,7 +109,26 @@ export default function Usuarios() {
 
   return (
     <>
+      <ModalUsuario
+        isOpen={isModal}
+        setIsOpen={setIsModal}
+        reload={listar}
+        acao={acaoModal}
+        id={itemID}
+      />
+
       <main>
+        <section className="flex justify-end pb-1">
+          <Button
+            onClick={() => {
+              setAcaoModal("criar");
+              setIsModal(true);
+            }}
+          >
+            <Plus />
+            Criar novo usuário
+          </Button>
+        </section>
         <DataTable
           emptyMessage={"Nenhum usuário encontrado"}
           loading={isLoading}

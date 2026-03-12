@@ -32,3 +32,7 @@ export function formatarDataTimezoneParaISO(agora: Date) {
 
   return dataFormatada;
 }
+
+export function formatarDataISOParaBR(data: string) {
+  return data?.split("-").reverse().join("/");
+}

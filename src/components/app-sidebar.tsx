@@ -193,8 +193,8 @@ function SidebarSubmenu({ item }: { item: SidebarItem }) {
 export function AppSidebar() {
   const { pathname } = useLocation();
   const { isMobile, open } = useSidebar();
-  const nomeUsuario = useGlobalState((state) => state.nome_usuario);
-  const perfilUsuario = useGlobalState((state) => state.perfil_usuario)
+  const nomeUsuario = useGlobalState((state) => state.nomeUsuario);
+  const perfilUsuario = useGlobalState((state) => state.perfilUsuario)
   const [isModalPrazoDoppler, setIsModalPrazoDoppler] = useState(false);
 
   return (
@@ -288,7 +288,7 @@ export function AppSidebar() {
                   <DropdownMenuLabel>Opções</DropdownMenuLabel>
 
                   {perfilUsuario === 1 && (
-                    <Link to={"/usuarios"}>
+                    <Link to={"/vascular/usuarios"}>
                       <DropdownMenuItem variant="outline">
                         <Users />
                         Usuários
@@ -318,7 +318,7 @@ export function AppSidebar() {
               <img
                 src={logoComsystem}
                 alt="Comsystem"
-                className="flex justify-self-center mt-1 w-25"
+                className="flex justify-self-center mt-3 mb-5 w-30"
               />
             </SidebarMenuItem>
           </SidebarMenu>

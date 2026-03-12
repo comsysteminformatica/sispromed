@@ -39,6 +39,7 @@ import { formatarTelefone, formatarCPF } from "@/utils/format";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import { Checkbox } from "../ui/checkbox";
 
 type ModalPacienteProps = {
   isOpen: boolean;
@@ -77,6 +78,7 @@ const formSchema = z.object({
     .string()
     .min(1, "Obrigatório")
     .max(10, "O número deve ter no máximo 80 caracteres"),
+  ativo: z.boolean().default(true),
 });
 
 export type FormFieldsPaciente = z.infer<typeof formSchema>;
@@ -92,6 +94,7 @@ const defaultValoresFormulario: FormFieldsPaciente = {
   bairro: "",
   rua: "",
   numero: "",
+  ativo: true,
 };
 
 export default function ModalPaciente({
@@ -150,6 +153,7 @@ export default function ModalPaciente({
           municipio: res.municipio,
           rua: res.rua,
           numero: res.numero,
+          ativo: res.ativo,
         });
       } catch (error) {
         toast.error("Erro ao carregar paciente");
@@ -447,6 +451,23 @@ export default function ModalPaciente({
                 )}
               />
             </section>
+
+            <Controller
+              name="ativo"
+              control={form.control}
+              render={({ field }) => (
+                <div className="flex items-center gap-2">
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                    id="ativo"
+                  />
+                  <label htmlFor="ativo" className="text-sm select-none">
+                    Ativo
+                  </label>
+                </div>
+              )}
+            />
 
             <DialogFooter className="pt-5">
               <DialogClose asChild>

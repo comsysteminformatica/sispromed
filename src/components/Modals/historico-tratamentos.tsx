@@ -17,7 +17,11 @@ import {
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import ModalTratamentoAcompanhamento from "./tratamento-acompanhamento";
-import { consultarTratamentosAcompanhamento, excluirTratamentoAcompanhamento } from "@/service/api";
+import {
+  consultarTratamentosAcompanhamento,
+  excluirTratamentoAcompanhamento,
+} from "@/service/api";
+import { formatarDataISOParaBR } from "@/utils/format";
 
 type ModalHistoricoTratamentosProps = {
   isOpen: boolean;
@@ -36,7 +40,8 @@ export default function ModalHistoricoTratamentos({
   const [acaoModal, setAcaoModal] = useState("criar");
   const [isModalTratamentoAcompanhamento, setIsModalTratamentoAcompanhamento] =
     useState(false);
-  const [tratamentoAcompanhamentoID, setTratamentoAcompanhamentoID] = useState(0);
+  const [tratamentoAcompanhamentoID, setTratamentoAcompanhamentoID] =
+    useState(0);
 
   function criar() {
     setAcaoModal("criar");
@@ -82,7 +87,8 @@ export default function ModalHistoricoTratamentos({
           <DialogHeader>
             <DialogTitle>Histórico de tratamentos - {nomePaciente}</DialogTitle>
             <DialogDescription>
-              Gerencie o histórico de tratamentos registrados para este paciente.
+              Gerencie o histórico de tratamentos registrados para este
+              paciente.
             </DialogDescription>
           </DialogHeader>
           <Button onClick={criar}>
@@ -94,9 +100,9 @@ export default function ModalHistoricoTratamentos({
               <CardHeader>
                 <CardDescription className="flex gap-x-1">
                   <Calendar size={20} />
-                  {item.data?.split("-").reverse().join("/")}
+                  {formatarDataISOParaBR(item.data)}
                 </CardDescription>
-                <CardTitle className="mt-2">{item.nome}</CardTitle>
+                <CardTitle>{item.nome}</CardTitle>
                 <CardDescription>{item.observacao}</CardDescription>
                 <CardAction>
                   <Button variant={"ghost"} onClick={() => editar(item.id)}>

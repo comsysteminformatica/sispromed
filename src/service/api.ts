@@ -20,9 +20,14 @@ import type { DashboardVascular } from "@/types/dashboardVascular";
 import type { FormFieldsLesaoAcompanhamento } from "@/components/Modals/lesao-acompanhamento";
 import type { FormFieldsTratamentoAcompanhamento } from "@/components/Modals/tratamento-acompanhamento";
 import type { FormFieldsPrazoDoppler } from "@/components/Modals/prazo-doppler";
+import type { FormFieldsUsuario } from "@/components/Modals/usuario";
+import type { Usuario } from "@/types/usuario";
 
 export const api = axios.create({
-  baseURL: "http://localhost:8086",
+  baseURL:
+    import.meta.env.VITE_DEVELOPMENT === "TRUE"
+      ? `http://${import.meta.env.VITE_IP_DEVELOPMENT}:8086`
+      : `https://${import.meta.env.VITE_IP_PRODUCTION}:8086`,
   withCredentials: true,
 });
 
@@ -92,13 +97,14 @@ api.interceptors.response.use(
 export const efetuarLogin = async (
   email: string,
   senha: string
-): Promise<string> => {
+): Promise<any> => {
   const { data } = await api.post("/login", {
     email,
     senha,
   });
 
   setAccessToken(data.access_token);
+
   return data;
 };
 
@@ -108,6 +114,7 @@ export const efetuarLoginGoogle = async (id_token: string) => {
   });
 
   setAccessToken(data.access_token);
+  return data;
 };
 
 export const efetuarLogout = async () => {
@@ -463,7 +470,41 @@ export const editarPrazoDoppler = async (
   return data;
 };
 
-export const consultarUsuarios = async (): Promise<object> => {
+export const consultarUsuarios = async (): Promise<Usuario[]> => {
   const { data } = await api.get("/usuarios");
+  return data;
+};
+
+export const consultarUsuario = async (id: number): Promise<Usuario> => {
+  const { data } = await api.get(`/usuarios/${id}`);
+  return data;
+};
+
+export const criarUsuario = async (
+  body: FormFieldsUsuario
+): Promise<object> => {
+  const { data } = await api.post(`/usuarios`, body);
+  return data;
+};
+
+export const editarUsuario = async (
+  id: number,
+  body: FormFieldsUsuario
+): Promise<object> => {
+  const { data } = await api.put(`/usuarios/${id}`, body);
+  return data;
+};
+
+export const consultarEmpresas = async (): Promise<any> => {
+  const { data } = await api.get(`/empresas`);
+  return data;
+};
+
+export const escolherEmpresa = async (id: number): Promise<any> => {
+  const { data } = await api.post("/empresa/escolher", {
+    id,
+  });
+
+  setAccessToken(data.access_token);
   return data;
 };

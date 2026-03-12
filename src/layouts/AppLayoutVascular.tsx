@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Outlet, useLocation } from "react-router";
 
-export default function Page() {
+export default function AppLayoutVascular() {
   const { pathname } = useLocation();
 
   return (
@@ -32,8 +32,11 @@ export default function Page() {
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="/vascular/dashboard">
-                    Vascular
+                  <BreadcrumbLink
+                    href={"/vascular/dashboard"}
+                    className="capitalize"
+                  >
+                    {pathname.substring(1).split("/")[0]}
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
