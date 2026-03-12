@@ -139,8 +139,6 @@ export default function DashboardVascular() {
         />
       </section>
 
-      {/* GRÁFICOS */}
-
       <section className="grid md:grid-cols-2 gap-4">
         {[
           {
