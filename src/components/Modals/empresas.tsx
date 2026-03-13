@@ -39,7 +39,11 @@ export default function ModalEmpresas({ isOpen, setIsOpen, data }: Props) {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent>
+      <DialogContent
+        showCloseButton={false}
+        onInteractOutside={(e) => e.preventDefault()}
+        onEscapeKeyDown={(e) => e.preventDefault()}
+      >
         <DialogHeader>
           <DialogTitle>Empresas</DialogTitle>
           <DialogDescription>
