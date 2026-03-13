@@ -34,7 +34,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { ufs } from "@/utils/utils";
+import { ufs, validarCPF } from "@/utils/utils";
 import { formatarTelefone, formatarCPF } from "@/utils/format";
 import { useEffect } from "react";
 import { toast } from "sonner";
@@ -50,7 +50,11 @@ type ModalPacienteProps = {
 };
 
 const formSchema = z.object({
-  cpf: z.string().min(1, "CPF é obrigatório"),
+    cpf: z.string()
+    .min(1, "CPF é obrigatório")
+    .refine((value) => validarCPF(value), {
+      message: "CPF inválido",
+    }),
   nome: z
     .string()
     .min(3, "O nome deve ter no mínimo 3 caracteres")
@@ -287,7 +291,7 @@ export default function ModalPaciente({
                       Data de Nascimento{" "}
                       <span className="text-destructive">*</span>
                     </FieldLabel>
-                    <Input type="date" {...field} />
+                    <Input type="date" max="2999-12-31" {...field} />
                     <FieldError errors={[fieldState.error]} />
                   </Field>
                 )}

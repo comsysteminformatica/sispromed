@@ -139,7 +139,7 @@ export default function ModalLesaoAcompanhamento({
                   <FieldLabel>
                     Data <span className="text-destructive">*</span>
                   </FieldLabel>
-                  <Input type="date" {...field} />
+                  <Input type="date"  max="2999-12-31" {...field} />
                   <FieldError errors={[fieldState.error]} />
                 </Field>
               )}

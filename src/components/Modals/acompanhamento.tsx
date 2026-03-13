@@ -352,7 +352,7 @@ export default function ModalAcompanhamento({
                   <FieldLabel>
                     Último Acesso <span className="text-destructive">*</span>
                   </FieldLabel>
-                  <Input type="date" {...field} />
+                  <Input type="date"  max="2999-12-31" {...field} />
                   <FieldError errors={[fieldState.error]} />
                 </Field>
               )}
@@ -389,7 +389,7 @@ export default function ModalAcompanhamento({
                   <FieldLabel>
                     Último USV <span className="text-destructive">*</span>
                   </FieldLabel>
-                  <Input type="date" {...field} />
+                  <Input type="date"  max="2999-12-31" {...field} />
                   <FieldError errors={[fieldState.error]} />
                 </Field>
               )}
@@ -522,7 +522,7 @@ export function FormAsyncSelect({
   const [isModalClinica, setIsModalClinica] = useState(false);
   const [isModalNefrologista, setIsModalNefrologista] = useState(false);
   const [isModalTipoAcesso, setIsModalTipoAcesso] = useState(false);
-
+  console.log(value)
   const [localOptions, setLocalOptions] = useState<
     { label: string; value: number }[]
   >([]);
@@ -560,7 +560,6 @@ export function FormAsyncSelect({
   const loadOptions: any = useMemo(
     () =>
       debouncePromise(async (inputValue: string) => {
-        if (!inputValue) return [];
         const res = await fetchFn(inputValue);
         const mapped = res.map((item: any) => ({
           value: item.id,
