@@ -522,7 +522,7 @@ export function FormAsyncSelect({
   const [isModalClinica, setIsModalClinica] = useState(false);
   const [isModalNefrologista, setIsModalNefrologista] = useState(false);
   const [isModalTipoAcesso, setIsModalTipoAcesso] = useState(false);
-  console.log(value)
+
   const [localOptions, setLocalOptions] = useState<
     { label: string; value: number }[]
   >([]);
