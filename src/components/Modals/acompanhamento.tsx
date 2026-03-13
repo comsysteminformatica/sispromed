@@ -33,6 +33,11 @@ import {
 } from "@/service/api";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import ModalPaciente from "./paciente";
+import ModalConvenio from "./convenio";
+import ModalClinica from "./clinica";
+import ModalNefrologista from "./nefrologista";
+import ModalTipoAcesso from "./tipo-acesso";
 
 export interface OpcaoSelect {
   id: number;
@@ -270,6 +275,7 @@ export default function ModalAcompanhamento({
                   </FieldLabel>
                   <FormAsyncSelect
                     placeholder="Buscar convênio..."
+                    inputId={field.name}
                     value={field.value}
                     onChange={field.onChange}
                     fetchFn={(v) => consultarConvenios("", "Nome", v)}
@@ -290,6 +296,7 @@ export default function ModalAcompanhamento({
                   </FieldLabel>
                   <FormAsyncSelect
                     placeholder="Buscar clínica..."
+                    inputId={field.name}
                     value={field.value}
                     onChange={field.onChange}
                     fetchFn={(v) => consultarClinicas("", "Nome", v)}
@@ -311,6 +318,7 @@ export default function ModalAcompanhamento({
                 </FieldLabel>
                 <FormAsyncSelect
                   placeholder="Buscar médico..."
+                  inputId={field.name}
                   value={field.value}
                   onChange={field.onChange}
                   fetchFn={(v) => consultarMedicos(1, "", "Nome", v)}
@@ -360,6 +368,7 @@ export default function ModalAcompanhamento({
                   </FieldLabel>
                   <FormAsyncSelect
                     placeholder="Buscar acesso..."
+                    inputId={field.name}
                     value={field.value}
                     onChange={field.onChange}
                     fetchFn={(v) => consultarTiposAcessos("", "Nome", v)}
@@ -396,6 +405,7 @@ export default function ModalAcompanhamento({
                   </FieldLabel>
                   <FormAsyncSelect
                     placeholder="Buscar cateter..."
+                    inputId={field.name}
                     value={field.value}
                     onChange={field.onChange}
                     fetchFn={(v) => consultarCateteres("", "Tipo", v)}
@@ -507,9 +517,29 @@ export function FormAsyncSelect({
   autoFocus,
   inputId,
 }: FormAsyncSelectProps) {
+  const [isModalPaciete, setIsModalPaciente] = useState(false);
+  const [isModalConvenio, setIsModalConvenio] = useState(false);
+  const [isModalClinica, setIsModalClinica] = useState(false);
+  const [isModalNefrologista, setIsModalNefrologista] = useState(false);
+  const [isModalTipoAcesso, setIsModalTipoAcesso] = useState(false);
+
   const [localOptions, setLocalOptions] = useState<
     { label: string; value: number }[]
   >([]);
+  function handleAddItem() {
+    if (inputId === "paciente_id") {
+      setIsModalPaciente(true)
+    } if (inputId === "convenio_id") {
+      setIsModalConvenio(true)
+    } if (inputId === "clinica_id") {
+      setIsModalClinica(true)
+    } if (inputId === "medico_id") {
+      setIsModalNefrologista(true)
+    } if (inputId === "tipo_acesso_id") {
+      setIsModalTipoAcesso(true)
+    }
+
+  }
 
   useEffect(() => {
     if (initialData) {
@@ -550,8 +580,8 @@ export function FormAsyncSelect({
 
   const selectValue = isMulti
     ? localOptions.filter(
-        (opt) => Array.isArray(value) && value.includes(opt.value)
-      )
+      (opt) => Array.isArray(value) && value.includes(opt.value)
+    )
     : localOptions.find((opt) => opt.value === value) || null;
 
   const handleChange = (selected: any) => {
@@ -563,57 +593,92 @@ export function FormAsyncSelect({
   };
 
   return (
-    <AsyncSelect
-      tabSelectsValue={false}
-      autoFocus={autoFocus}
-      inputId={inputId}
-      isMulti={isMulti}
-      cacheOptions
-      defaultOptions
-      loadOptions={loadOptions}
-      value={selectValue}
-      onChange={handleChange}
-      placeholder={placeholder || "Selecione..."}
-      loadingMessage={() => "Buscando..."}
-      noOptionsMessage={({ inputValue }) =>
-        inputValue ? (
-          <Button>Nenhum resultado.</Button>
-        ) : (
-          "Digite para buscar..."
-        )
-      }
-      unstyled
-      classNames={{
-        control: ({ isFocused, isDisabled }) =>
-          cn(
-            "flex min-h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors",
-            isFocused ? "outline-none ring-1 ring-ring" : "",
-            isDisabled ? "cursor-not-allowed opacity-50" : ""
-          ),
-        valueContainer: () => "flex flex-wrap gap-1 w-full p-0 m-0",
-        input: () => "text-sm text-foreground m-0 p-0",
-        singleValue: () => "text-sm text-foreground",
-        placeholder: () => "text-sm text-muted-foreground",
-        menu: () =>
-          "mt-2 rounded-md border bg-popover text-popover-foreground shadow-md z-50",
-        menuList: () => "p-1",
-        option: ({ isFocused, isSelected }) =>
-          cn(
-            "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 px-2 text-sm outline-none transition-colors",
-            isFocused ? "bg-accent text-accent-foreground" : "",
-            isSelected ? "bg-primary text-primary-foreground" : ""
-          ),
-        multiValue: () =>
-          "flex items-center rounded-sm bg-secondary text-secondary-foreground overflow-hidden",
-        multiValueLabel: () => "px-2 py-0.5 text-xs font-medium",
-        multiValueRemove: () =>
-          "px-1.5 py-0.5 hover:bg-primary/30 hover:text-primary-foreground cursor-pointer transition-colors",
-        indicatorsContainer: () =>
-          "flex items-center gap-1 text-muted-foreground",
-        indicatorSeparator: () => "bg-border w-[1px] my-1 mx-1",
-        dropdownIndicator: () => "p-1 hover:text-foreground cursor-pointer",
-        clearIndicator: () => "p-1 hover:text-secondary cursor-pointer",
-      }}
-    />
+    <>
+      <ModalPaciente
+        isOpen={isModalPaciete}
+        setIsOpen={setIsModalPaciente}
+        acao={"criar"}
+      />
+
+      <ModalConvenio
+        isOpen={isModalConvenio}
+        setIsOpen={setIsModalConvenio}
+        acao={"criar"}
+      />
+      <ModalClinica
+        isOpen={isModalClinica}
+        setIsOpen={setIsModalClinica}
+        acao={"criar"}
+      />
+
+      <ModalNefrologista
+        isOpen={isModalNefrologista}
+        setIsOpen={setIsModalNefrologista}
+        acao="criar"
+      />
+      <ModalTipoAcesso
+        isOpen={isModalTipoAcesso}
+        setIsOpen={setIsModalTipoAcesso}
+        acao="criar"
+      />
+
+      <AsyncSelect
+        tabSelectsValue={false}
+        autoFocus={autoFocus}
+        inputId={inputId}
+        isMulti={isMulti}
+        cacheOptions
+        defaultOptions
+        loadOptions={loadOptions}
+        value={selectValue}
+        onChange={handleChange}
+        placeholder={placeholder || "Selecione..."}
+        loadingMessage={() => "Buscando..."}
+        noOptionsMessage={({ inputValue }) =>
+          inputValue ? (
+            <span>
+              Nenhum resultado foi encontrado.
+              <p className="text-blue-400 cursor-pointer" onClick={handleAddItem}>Clique para adicionar</p>
+            </span>
+          ) : (
+            "Digite para buscar..."
+          )
+        }
+        unstyled
+        classNames={{
+          control: ({ isFocused, isDisabled }) =>
+            cn(
+              "flex min-h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors",
+              isFocused ? "outline-none ring-1 ring-ring" : "",
+              isDisabled ? "cursor-not-allowed opacity-50" : ""
+            ),
+          valueContainer: () => "flex flex-wrap gap-1 w-full p-0 m-0",
+          input: () => "text-sm text-foreground m-0 p-0",
+          singleValue: () => "text-sm text-foreground",
+          placeholder: () => "text-sm text-muted-foreground",
+          menu: () =>
+            "mt-2 rounded-md border bg-popover text-popover-foreground shadow-md z-50",
+          menuList: () => "p-1",
+          option: ({ isFocused, isSelected }) =>
+            cn(
+              "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 px-2 text-sm outline-none transition-colors",
+              isFocused ? "bg-accent text-accent-foreground" : "",
+              isSelected ? "bg-primary text-primary-foreground" : ""
+            ),
+          multiValue: () =>
+            "flex items-center rounded-sm bg-secondary text-secondary-foreground overflow-hidden",
+          multiValueLabel: () => "px-2 py-0.5 text-xs font-medium",
+          multiValueRemove: () =>
+            "px-1.5 py-0.5 hover:bg-primary/30 hover:text-primary-foreground cursor-pointer transition-colors",
+          indicatorsContainer: () =>
+            "flex items-center gap-1 text-muted-foreground",
+          indicatorSeparator: () => "bg-border w-[1px] my-1 mx-1",
+          dropdownIndicator: () => "p-1 hover:text-foreground cursor-pointer",
+          clearIndicator: () => "p-1 hover:text-secondary cursor-pointer",
+        }}
+      />
+    </>
+
+
   );
 }

@@ -29,7 +29,7 @@ type ModalConvenioProps = {
   setIsOpen: (isOpen: boolean) => void;
   acao: "criar" | "editar";
   id?: number;
-  reload: () => Promise<void>;
+  reload?: () => Promise<void> | void;
 };
 
 const formSchema = z.object({
@@ -65,8 +65,9 @@ export default function ModalConvenio({
       } else if (acao === "editar") {
         response = await editarConvenio(id, data);
       }
-
-      await reload();
+      if (reload) {
+        await reload();
+      }
       setIsOpen(false);
       toast.success(response?.message);
     } catch (error) {
