@@ -26,7 +26,7 @@ export const api = axios.create({
   baseURL:
     import.meta.env.VITE_DEVELOPMENT === "TRUE"
       ? `http://${import.meta.env.VITE_IP_DEVELOPMENT}:8086`
-      : `https://${import.meta.env.VITE_IP_PRODUCTION}:8086`,
+      : `https://api.sispromed.com.br:8086`,
   withCredentials: true,
 });
 
