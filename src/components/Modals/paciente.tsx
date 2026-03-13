@@ -48,7 +48,6 @@ type ModalPacienteProps = {
   id?: number;
   reload?: () => Promise<void> | void;
 };
-
 const formSchema = z.object({
     cpf: z.string()
     .min(1, "CPF é obrigatório")
