@@ -163,10 +163,10 @@ export default function Acompanhamentos() {
         );
       },
     },
-    { accessorKey: "situacao_clinica", header: "Situação Clínica" },
+    { accessorKey: "situacao_clinica", header: "Sit. Clínica" },
     {
       accessorKey: "ultimo_acesso",
-      header: "Último Acesso",
+      header: "Últ. Acesso",
       cell: ({ row }) =>
         row.original.ultimo_acesso
           ? formatarDataISOParaBR(row.original.ultimo_acesso)
@@ -214,7 +214,7 @@ export default function Acompanhamentos() {
     },
     {
       accessorKey: "alteracao_clinica",
-      header: "Alteração Clínica",
+      header: "Alt. Clínica",
       cell: ({ row }) => {
         const variant =
           row.original.alteracao_clinica === "Sim" ? "destructive" : "outline";
@@ -238,7 +238,7 @@ export default function Acompanhamentos() {
         return (
           <Button
             variant="link"
-            className="tabular-nums p-0"
+            className="tabular-nums text-xs p-0"
             onClick={() => {
               setIsModalHistoricoLesoes(true);
               setItemID(row.original.id);
@@ -257,7 +257,7 @@ export default function Acompanhamentos() {
         return (
           <Button
             variant="link"
-            className="tabular-nums p-0"
+            className="tabular-nums text-xs p-0"
             onClick={() => {
               setIsModalHistoricoTratamentos(true);
               setItemID(row.original.id);
