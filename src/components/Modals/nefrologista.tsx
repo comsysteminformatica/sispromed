@@ -9,7 +9,7 @@ import {
 } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { object, z } from "zod";
+import { z } from "zod";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
@@ -57,7 +57,7 @@ export default function ModalNefrologista({
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
     try {
-      let response: object;
+      let response: any;
 
       if (acao === "criar") {
         response = await criarMedico(data);

@@ -1,6 +1,6 @@
 import { DataTable } from "@/components/data-table";
 import type { Convenio } from "@/types/convenio";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import { consultarConvenios } from "@/service/api";
 import type { ColumnDef } from "@tanstack/react-table";
@@ -70,7 +70,7 @@ export default function Convenios() {
   ) {
     try {
       setIsLoading(true);
-      const response = await consultarConvenios(busca, categoria);
+      const response = await consultarConvenios(tipo, categoria, busca);
       setData(response);
     } catch (error) {
       if (error instanceof AxiosError) {

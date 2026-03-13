@@ -33,7 +33,7 @@ export default function Cateteres() {
   ) {
     try {
       setIsLoading(true);
-      const response = await consultarCateteres(busca, categoria);
+      const response = await consultarCateteres(tipo, categoria, busca);
       setData(response);
     } catch (error) {
       if (error instanceof AxiosError) {

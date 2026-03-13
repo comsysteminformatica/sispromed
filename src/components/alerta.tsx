@@ -19,7 +19,7 @@ export default function Alerta({
   onCancel = () => {},
   onConfirm = () => {},
 }: any) {
-  const getIcone = () => {
+  const getIcone = (): any => {
     switch (type) {
       case "error":
         return {

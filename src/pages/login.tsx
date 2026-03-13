@@ -22,7 +22,6 @@ import {
   efetuarLoginGoogle,
   efetuarLogout,
 } from "@/service/api.ts";
-import { toast } from "sonner";
 
 const schema = z.object({
   email: z.email("Email inválido"),
@@ -160,10 +159,9 @@ export default function Login() {
                     }
                   }
                 }}
-                
-                onError={(error) => {
-                  toast.error("Erro ao realizar login");
-                }}
+                // onError={(error: any) => {
+                //   toast.error("Erro ao realizar login");
+                // }}
               />
             </section>
           </form>

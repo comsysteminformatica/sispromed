@@ -95,7 +95,7 @@ export default function ModalHistoricoTratamentos({
             <Plus /> Adicionar tratamento
           </Button>
 
-          {tratamentos.map((item) => (
+          {tratamentos.map((item: any) => (
             <Card className="w-full">
               <CardHeader>
                 <CardDescription className="flex gap-x-1">

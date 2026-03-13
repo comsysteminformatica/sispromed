@@ -84,7 +84,7 @@ const formSchema = z.object({
 
 export type FormFieldsAcompanhamento = z.infer<typeof formSchema>;
 
-const defaultValoresFormulario: FormFieldsAcompanhamento = {
+const defaultValoresFormulario: any = {
   paciente_id: null,
   convenio_id: null,
   clinica_id: null,
@@ -109,7 +109,7 @@ export default function ModalAcompanhamento({
   const [initialRecord, setInitialRecord] = useState<any>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
-  const form = useForm<FormFieldsAcompanhamento>({
+  const form = useForm<any>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValoresFormulario,
   });
@@ -527,7 +527,7 @@ export function FormAsyncSelect({
     }
   }, [initialData]);
 
-  const loadOptions = useMemo(
+  const loadOptions: any = useMemo(
     () =>
       debouncePromise(async (inputValue: string) => {
         if (!inputValue) return [];

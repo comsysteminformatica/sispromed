@@ -70,7 +70,7 @@ export default function Tratamentos() {
   ) {
     try {
       setIsLoading(true);
-      const response = await consultarTratamentos(busca, categoria);
+      const response = await consultarTratamentos(tipo, busca, categoria);
       setData(response);
     } catch (error) {
       if (error instanceof AxiosError) {

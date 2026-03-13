@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MoreHorizontal, Plus, Settings } from "lucide-react";
+import { MoreHorizontal, Plus } from "lucide-react";
 import type { ColumnDef } from "@tanstack/react-table";
 import Alerta from "@/components/alerta";
 import { toast } from "sonner";
@@ -177,7 +177,7 @@ export default function Acompanhamentos() {
     {
       accessorKey: "ultimo_usv",
       header: "Último USV",
-      cell: ({ row }) => {
+      cell: ({ row }: any) => {
         const variant = row.original.prazo_doppler_vencido
           ? "destructive"
           : "outline";

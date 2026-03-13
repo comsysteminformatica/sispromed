@@ -70,7 +70,7 @@ export default function Clinicas() {
   ) {
     try {
       setIsLoading(true);
-      const response = await consultarClinicas(busca, categoria);
+      const response = await consultarClinicas(tipo, categoria, busca);
       setData(response);
     } catch (error) {
       if (error instanceof AxiosError) {

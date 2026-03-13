@@ -70,7 +70,7 @@ export default function Lesoes() {
   ) {
     try {
       setIsLoading(true);
-      const response = await consultarLesoes(busca, categoria);
+      const response = await consultarLesoes(tipo, categoria, busca);
       setData(response);
     } catch (error) {
       if (error instanceof AxiosError) {

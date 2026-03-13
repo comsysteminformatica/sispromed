@@ -22,6 +22,7 @@ import {
 import ModalLesaoAcompanhamento from "./lesao-acompanhamento";
 import { toast } from "sonner";
 import { formatarDataISOParaBR } from "@/utils/format";
+import type { Lesao } from "@/types/lesao";
 
 type ModalHistoricoLesoesProps = {
   isOpen: boolean;
@@ -93,7 +94,7 @@ export default function ModalHistoricoLesoes({
             <Plus /> Adicionar Lesão
           </Button>
 
-          {lesoes.map((item) => (
+          {lesoes.map((item: Lesao) => (
             <Card className="w-full">
               <CardHeader>
                 <CardDescription className="flex gap-x-1">

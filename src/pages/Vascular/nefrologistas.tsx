@@ -65,12 +65,12 @@ export default function Nefrologistas() {
 
   async function listar(
     tipo: "busca" | "filtro" | "" = "",
-    categoria: string = "",
-    busca: string = ""
+    categoria = "",
+    busca = ""
   ) {
     try {
       setIsLoading(true);
-      const response = await consultarMedicos(1, busca, categoria);
+      const response = await consultarMedicos(1, tipo, categoria, busca);
       setData(response);
     } catch (error) {
       if (error instanceof AxiosError) {

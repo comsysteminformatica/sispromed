@@ -47,7 +47,7 @@ const formSchema = z.object({
 
 export type FormFieldsTratamentoAcompanhamento = z.infer<typeof formSchema>;
 
-const defaultValoresFormulario: FormFieldsTratamentoAcompanhamento = {
+const defaultValoresFormulario: any = {
   data: formatarDataTimezoneParaISO(new Date()),
   tratamento_id: null,
   observacao: "",
@@ -64,14 +64,14 @@ export default function ModalTratamentoAcompanhamento({
 }: ModalTratamentoAcompanhamentoProps) {
   const [initialRecord, setInitialRecord] = useState<any>(null);
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<any>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValoresFormulario,
   });
 
-  async function onSubmit(data: z.infer<typeof formSchema>) {
+  async function onSubmit(data: any) {
     try {
-      let response: object;
+      let response: any;
 
       if (acao === "criar") {
         response = await criarTratamentoAcompanhamento(idAcompanhamento, data);
@@ -104,7 +104,7 @@ export default function ModalTratamentoAcompanhamento({
 
     (async () => {
       try {
-        const res = await consultarTratamentoAcompanhamento(id);
+        const res: any = await consultarTratamentoAcompanhamento(id);
 
         setInitialRecord(res);
 

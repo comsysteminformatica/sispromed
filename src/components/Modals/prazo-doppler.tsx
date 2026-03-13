@@ -31,7 +31,7 @@ const formSchema = z.object({
 
 export type FormFieldsPrazoDoppler = z.infer<typeof formSchema>;
 
-const defaultValoresFormulario: FormFieldsPrazoDoppler = {
+const defaultValoresFormulario: any = {
   prazo: null,
 };
 
@@ -39,7 +39,7 @@ export default function ModalPrazoDoppler({
   isOpen,
   setIsOpen,
 }: ModalPrazoDopplerProps) {
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<any>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValoresFormulario,
   });

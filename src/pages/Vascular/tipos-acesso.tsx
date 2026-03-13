@@ -71,7 +71,7 @@ export default function TiposAcesso() {
   ) {
     try {
       setIsLoading(true);
-      const response = await consultarTiposAcessos(busca, categoria);
+      const response = await consultarTiposAcessos(tipo, categoria, busca);
       setData(response);
     } catch (error) {
       if (error instanceof AxiosError) {

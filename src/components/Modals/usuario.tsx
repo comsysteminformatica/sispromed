@@ -78,7 +78,7 @@ export default function ModalUsuario({
   id,
   reload,
 }: ModalUsuarioProps) {
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<any>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValoresFormulario,
   });
@@ -87,9 +87,9 @@ export default function ModalUsuario({
 
   const [isMostrarSenha, setIsMostrarSenha] = useState(false);
 
-  async function onSubmit(data: z.infer<typeof formSchema>) {
+  async function onSubmit(data: any) {
     try {
-      let response: object;
+      let response: any;
 
       if (acao === "criar") {
         response = await criarUsuario(data);

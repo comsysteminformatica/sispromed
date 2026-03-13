@@ -1,13 +1,11 @@
 import { createBrowserRouter } from "react-router";
 import Login from "@/pages/login";
-import Agenda from "@/pages/agenda";
 import AuthLayout from "@/layouts/AuthLayout";
 import Dashboard from "./pages/Vascular/dashboard";
 import Pacientes from "./pages/Vascular/pacientes";
 import Convenios from "./pages/Vascular/convenios";
 import Nefrologistas from "./pages/Vascular/nefrologistas";
 import TiposAcesso from "./pages/Vascular/tipos-acesso";
-import Cateteres from "./pages/Vascular/cateteres";
 import Lesoes from "./pages/Vascular/lesoes";
 import Clinicas from "./pages/Vascular/clinicas";
 import Tratamentos from "./pages/Vascular/tratamentos";

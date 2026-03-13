@@ -71,9 +71,9 @@ export default function Calendario() {
     setIsModalCalendarioOpen(true);
   };
 
-  const handleEventoClose = () => {
-    setEventoSelecionado(null);
-  };
+  // const handleEventoClose = () => {
+  //   setEventoSelecionado(null);
+  // };
 
   const eventStyle = (event: any) => ({
     style: {

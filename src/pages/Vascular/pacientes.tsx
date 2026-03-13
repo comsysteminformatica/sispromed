@@ -106,7 +106,7 @@ export default function Pacientes() {
   ) {
     try {
       setIsLoading(true);
-      const response = await consultarPacientes(busca, categoria);
+      const response = await consultarPacientes(tipo, categoria, busca);
       setData(response);
     } catch (error) {
       if (error instanceof AxiosError) {

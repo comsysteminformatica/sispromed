@@ -18,7 +18,7 @@ export default function Usuarios() {
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [usuarios, setUsuarios] = useState([]);
+  const [usuarios, setUsuarios] = useState<any[]>([]);
 
   const [isModal, setIsModal] = useState(false);
   const [itemID, setItemID] = useState(0);
@@ -36,7 +36,7 @@ export default function Usuarios() {
     {
       accessorKey: "situacao",
       header: "Situação",
-      cell: ({ row }) => {
+      cell: ({ row }: any) => {
         const variant =
           row.original.situacao === "Permitido" ? "success" : "destructive";
 
@@ -55,7 +55,7 @@ export default function Usuarios() {
     },
     {
       id: "actions",
-      cell: ({ row }) => {
+      cell: ({ row }: any) => {
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -89,7 +89,7 @@ export default function Usuarios() {
       setIsLoading(true);
       const response = await consultarUsuarios();
       setUsuarios(response);
-    } catch (error) {
+    } catch (error: any) {
       if (error as AxiosError) {
         if (
           error?.response?.data?.message ===

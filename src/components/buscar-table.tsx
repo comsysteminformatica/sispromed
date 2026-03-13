@@ -15,7 +15,7 @@ type BuscarTableProps = {
   busca: string;
   setBusca: (v: string) => void;
   statusFiltro: string;
-  setStatusFiltro: (v: string) => void;
+  setStatusFiltro: any;
   listar: (
     tipo?: "busca" | "filtro" | "",
     categoria?: string,

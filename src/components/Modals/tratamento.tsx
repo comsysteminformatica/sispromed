@@ -55,7 +55,7 @@ export default function ModalTratamento({
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
     try {
-      let response: object;
+      let response: any;
 
       if (acao === "criar") {
         response = await criarTratamento(data);

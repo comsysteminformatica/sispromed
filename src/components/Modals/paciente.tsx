@@ -104,14 +104,14 @@ export default function ModalPaciente({
   id,
   reload,
 }: ModalPacienteProps) {
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<any>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValoresFormulario,
   });
 
-  async function onSubmit(data: z.infer<typeof formSchema>) {
+  async function onSubmit(data: any) {
     try {
-      let response: object;
+      let response: any;
       if (acao === "criar") {
         response = await criarPaciente(data);
       } else if (acao === "editar") {

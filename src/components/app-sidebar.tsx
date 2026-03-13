@@ -289,7 +289,7 @@ export function AppSidebar() {
 
                   {perfilUsuario === 1 && (
                     <Link to={"/vascular/usuarios"}>
-                      <DropdownMenuItem variant="outline">
+                      <DropdownMenuItem>
                         <Users />
                         Usuários
                       </DropdownMenuItem>
@@ -297,7 +297,6 @@ export function AppSidebar() {
                   )}
 
                   <DropdownMenuItem
-                    variant={"outline"}
                     onClick={() => setIsModalPrazoDoppler(true)}
                   >
                     <Settings /> Configurações

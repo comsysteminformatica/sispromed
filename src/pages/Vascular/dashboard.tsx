@@ -37,7 +37,7 @@ export default function DashboardVascular() {
   const setEmpresaUsuario = useGlobalState((state) => state.setEmpresaUsuario);
   const empresaUsuario = useGlobalState((state) => state.empresaUsuario);
 
-  const [data, setData] = useState<DashboardVascular>();
+  const [data, setData] = useState<any>();
   const [dataEmpresas, setDataEmpresas] = useState<Empresa[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isModalEmpresas, setIsModalEmpresas] = useState(false);
