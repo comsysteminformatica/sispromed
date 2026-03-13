@@ -251,7 +251,7 @@ export default function ModalAcompanhamento({
                   placeholder="Pesquisar paciente..."
                   value={field.value}
                   onChange={field.onChange}
-                  fetchFn={consultarPacientes}
+                  fetchFn={(v) => consultarPacientes("", "Nome", v)}
                   initialData={initialRecord?.paciente}
                 />
                 <FieldError errors={[fieldState.error]} />
@@ -272,7 +272,7 @@ export default function ModalAcompanhamento({
                     placeholder="Buscar convênio..."
                     value={field.value}
                     onChange={field.onChange}
-                    fetchFn={consultarConvenios}
+                    fetchFn={(v) => consultarConvenios("", "Nome", v)}
                     initialData={initialRecord?.convenio}
                   />
                   <FieldError errors={[fieldState.error]} />
@@ -292,7 +292,7 @@ export default function ModalAcompanhamento({
                     placeholder="Buscar clínica..."
                     value={field.value}
                     onChange={field.onChange}
-                    fetchFn={consultarClinicas}
+                    fetchFn={(v) => consultarClinicas("", "Nome", v)}
                     initialData={initialRecord?.clinica}
                   />
                   <FieldError errors={[fieldState.error]} />
@@ -313,7 +313,7 @@ export default function ModalAcompanhamento({
                   placeholder="Buscar médico..."
                   value={field.value}
                   onChange={field.onChange}
-                  fetchFn={(v) => consultarMedicos(1, v, "Nome")}
+                  fetchFn={(v) => consultarMedicos(1, "", "Nome", v)}
                   initialData={initialRecord?.medico}
                 />
                 <FieldError errors={[fieldState.error]} />
@@ -362,7 +362,7 @@ export default function ModalAcompanhamento({
                     placeholder="Buscar acesso..."
                     value={field.value}
                     onChange={field.onChange}
-                    fetchFn={consultarTiposAcessos}
+                    fetchFn={(v) => consultarTiposAcessos("", "Nome", v)}
                     initialData={initialRecord?.tipo_acesso}
                   />
                   <FieldError errors={[fieldState.error]} />
@@ -398,7 +398,7 @@ export default function ModalAcompanhamento({
                     placeholder="Buscar cateter..."
                     value={field.value}
                     onChange={field.onChange}
-                    fetchFn={consultarCateteres}
+                    fetchFn={(v) => consultarCateteres("", "Tipo", v)}
                     initialData={initialRecord?.cateter}
                   />
                   <FieldError errors={[fieldState.error]} />
@@ -576,7 +576,11 @@ export function FormAsyncSelect({
       placeholder={placeholder || "Selecione..."}
       loadingMessage={() => "Buscando..."}
       noOptionsMessage={({ inputValue }) =>
-        inputValue ? "Nenhum resultado." : "Digite para buscar..."
+        inputValue ? (
+          <Button>Nenhum resultado.</Button>
+        ) : (
+          "Digite para buscar..."
+        )
       }
       unstyled
       classNames={{
