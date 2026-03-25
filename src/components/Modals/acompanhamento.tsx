@@ -641,7 +641,7 @@ export function FormAsyncSelect({
             </span>
           ) : (
              <span>
-              Digite para Buscar.
+              Digite para buscar...
               <p className="text-xs">OU</p>
               <p className="text-blue-400 cursor-pointer" onClick={handleAddItem}>Clique para Adicionar</p>
             </span>
