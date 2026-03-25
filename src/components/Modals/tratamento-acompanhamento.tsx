@@ -124,7 +124,12 @@ export default function ModalTratamentoAcompanhamento({
     <>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
+          <form
+            onSubmit={(event) => {
+              event.stopPropagation();
+              form.handleSubmit(onSubmit)(event);
+            }}
+          >
             <DialogHeader className="mb-3">
               <DialogTitle>Adicionar tratamento - {nomePaciente}</DialogTitle>
               <DialogDescription>
