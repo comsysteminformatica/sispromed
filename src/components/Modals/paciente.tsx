@@ -170,7 +170,10 @@ export default function ModalPaciente({
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent>
           <form
-            onSubmit={form.handleSubmit(onSubmit)}
+            onSubmit={(e) => {
+              e.stopPropagation();
+              form.handleSubmit(onSubmit)(e);
+            }}
             className="space-y-1 p-1"
           >
             <DialogHeader>
