@@ -79,7 +79,12 @@ export default function ModalPrazoDoppler({
     <>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
+          <form
+            onSubmit={(event) => {
+              event.stopPropagation();
+              form.handleSubmit(onSubmit)(event);
+            }}
+          >
             <DialogHeader className="mb-3">
               <DialogTitle>Configuração do Sistema</DialogTitle>
               <DialogDescription>

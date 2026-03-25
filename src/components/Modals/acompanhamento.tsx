@@ -184,6 +184,10 @@ export default function ModalAcompanhamento({
   const handleTabChange = (event: React.KeyboardEvent<HTMLFormElement>) => {
     if (event.key !== "Tab") return;
 
+    if (!formRef.current?.contains(document.activeElement)) {
+      return;
+    }
+
     event.preventDefault();
 
     if (!formRef.current) return;
@@ -352,7 +356,7 @@ export default function ModalAcompanhamento({
                   <FieldLabel>
                     Último Acesso <span className="text-destructive">*</span>
                   </FieldLabel>
-                  <Input type="date"  max="2999-12-31" {...field} />
+                  <Input type="date" max="2999-12-31" {...field} />
                   <FieldError errors={[fieldState.error]} />
                 </Field>
               )}
@@ -389,7 +393,7 @@ export default function ModalAcompanhamento({
                   <FieldLabel>
                     Último USV <span className="text-destructive">*</span>
                   </FieldLabel>
-                  <Input type="date"  max="2999-12-31" {...field} />
+                  <Input type="date" max="2999-12-31" {...field} />
                   <FieldError errors={[fieldState.error]} />
                 </Field>
               )}
@@ -526,19 +530,24 @@ export function FormAsyncSelect({
   const [localOptions, setLocalOptions] = useState<
     { label: string; value: number }[]
   >([]);
+  const [hasOpened, setHasOpened] = useState(false);
+
   function handleAddItem() {
     if (inputId === "paciente_id") {
-      setIsModalPaciente(true)
-    } if (inputId === "convenio_id") {
-      setIsModalConvenio(true)
-    } if (inputId === "clinica_id") {
-      setIsModalClinica(true)
-    } if (inputId === "medico_id") {
-      setIsModalNefrologista(true)
-    } if (inputId === "tipo_acesso_id") {
-      setIsModalTipoAcesso(true)
+      setIsModalPaciente(true);
     }
-
+    if (inputId === "convenio_id") {
+      setIsModalConvenio(true);
+    }
+    if (inputId === "clinica_id") {
+      setIsModalClinica(true);
+    }
+    if (inputId === "medico_id") {
+      setIsModalNefrologista(true);
+    }
+    if (inputId === "tipo_acesso_id") {
+      setIsModalTipoAcesso(true);
+    }
   }
 
   useEffect(() => {
@@ -557,7 +566,7 @@ export function FormAsyncSelect({
     }
   }, [initialData]);
 
-  const loadOptions: any = useMemo(
+  const debouncedFetch: any = useMemo(
     () =>
       debouncePromise(async (inputValue: string) => {
         const res = await fetchFn(inputValue);
@@ -577,10 +586,42 @@ export function FormAsyncSelect({
     [fetchFn]
   );
 
+  const loadOptions: any = async (inputValue: string) => {
+    if (!inputValue) {
+      try {
+        const res = await fetchFn("");
+        const mapped = res.map((item: any) => ({
+          value: item.id,
+          label: item.nome ?? item.tipo ?? "...",
+        }));
+
+        setLocalOptions((prev) => {
+          const map = new Map(prev.map((p) => [p.value, p]));
+          mapped.forEach((m) => map.set(m.value, m));
+          return Array.from(map.values());
+        });
+
+        return mapped;
+      } catch (error) {
+        console.error("Erro ao carregar opções:", error);
+        return [];
+      }
+    }
+
+    return debouncedFetch(inputValue);
+  };
+
+  const handleMenuOpen = async () => {
+    if (!hasOpened) {
+      setHasOpened(true);
+      await loadOptions("");
+    }
+  };
+
   const selectValue = isMulti
     ? localOptions.filter(
-      (opt) => Array.isArray(value) && value.includes(opt.value)
-    )
+        (opt) => Array.isArray(value) && value.includes(opt.value)
+      )
     : localOptions.find((opt) => opt.value === value) || null;
 
   const handleChange = (selected: any) => {
@@ -629,6 +670,7 @@ export function FormAsyncSelect({
         cacheOptions
         defaultOptions
         loadOptions={loadOptions}
+        onMenuOpen={handleMenuOpen}
         value={selectValue}
         onChange={handleChange}
         placeholder={placeholder || "Selecione..."}
@@ -637,13 +679,23 @@ export function FormAsyncSelect({
           inputValue ? (
             <span>
               Nenhum resultado foi encontrado.
-              <p className="text-blue-400 cursor-pointer" onClick={handleAddItem}>Clique para adicionar</p>
+              <p
+                className="text-blue-400 cursor-pointer"
+                onClick={handleAddItem}
+              >
+                Clique para adicionar
+              </p>
             </span>
           ) : (
-             <span>
+            <span>
               Digite para buscar...
               <p className="text-xs">OU</p>
-              <p className="text-blue-400 cursor-pointer" onClick={handleAddItem}>Clique para Adicionar</p>
+              <p
+                className="text-blue-400 cursor-pointer"
+                onClick={handleAddItem}
+              >
+                Clique para Adicionar
+              </p>
             </span>
           )
         }
@@ -681,7 +733,5 @@ export function FormAsyncSelect({
         }}
       />
     </>
-
-
   );
 }

@@ -100,7 +100,12 @@ export default function ModalLesao({
     <>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
+          <form
+            onSubmit={(event) => {
+              event.stopPropagation();
+              form.handleSubmit(onSubmit)(event);
+            }}
+          >
             <DialogHeader>
               <DialogTitle>
                 {acao === "criar" ? "Nova Lesão" : "Editar Lesão"}

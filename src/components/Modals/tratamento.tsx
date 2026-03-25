@@ -102,7 +102,12 @@ export default function ModalTratamento({
     <>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
+          <form
+            onSubmit={(event) => {
+              event.stopPropagation();
+              form.handleSubmit(onSubmit)(event);
+            }}
+          >
             <DialogHeader>
               <DialogTitle>
                 {acao === "criar" ? "Novo Tratamento" : "Editar Tratamento"}
