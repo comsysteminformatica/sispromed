@@ -159,9 +159,10 @@ export default function ModalLesaoAcompanhamento({
                   </FieldLabel>
                   <FormAsyncSelect
                     placeholder="Buscar lesões..."
+                    inputId={field.name}
                     value={field.value}
                     onChange={field.onChange}
-                    fetchFn={consultarLesoes}
+                    fetchFn={(v) => consultarLesoes("", "Nome", v)}
                     initialData={initialRecord?.lesao}
                   />
                   <FieldError errors={[fieldState.error]} />

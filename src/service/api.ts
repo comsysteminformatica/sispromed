@@ -134,9 +134,7 @@ export const consultarAcompanhamentos = async (
   return data;
 };
 
-export const consultarAcompanhamento = async (
-  id: number
-): Promise<any> => {
+export const consultarAcompanhamento = async (id: number): Promise<any> => {
   const { data } = await api.get(`/acompanhamentos/${id}`);
   return data;
 };
@@ -373,17 +371,15 @@ export const editarLesaoAcompanhamento = async (
   return data;
 };
 
-export const excluirLesaoAcompanhamento = async (
-  id: number
-): Promise<any> => {
+export const excluirLesaoAcompanhamento = async (id: number): Promise<any> => {
   const { data } = await api.delete(`/lesoes/acompanhamento/${id}`);
   return data;
 };
 
 export const consultarTratamentos = async (
   tipo = "",
-  q = "",
-  category = ""
+  category = "",
+  q = ""
 ): Promise<Tratamento[]> => {
   const { data } = await api.get(`/tratamentos`, {
     params: { tipo, q, category },
@@ -487,9 +483,7 @@ export const consultarUsuario = async (id: number): Promise<Usuario> => {
   return data;
 };
 
-export const criarUsuario = async (
-  body: FormFieldsUsuario
-): Promise<any> => {
+export const criarUsuario = async (body: FormFieldsUsuario): Promise<any> => {
   const { data } = await api.post(`/usuarios`, body);
   return data;
 };
