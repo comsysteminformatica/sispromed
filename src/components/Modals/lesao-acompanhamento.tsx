@@ -25,6 +25,7 @@ import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import { Textarea } from "../ui/textarea";
 import { formatarDataTimezoneParaISO } from "@/utils/format";
+import { Loader2 } from "lucide-react";
 
 type ModalLesaoAcompanhamentoProps = {
   isOpen: boolean;
@@ -60,7 +61,7 @@ export default function ModalLesaoAcompanhamento({
   idAcompanhamento,
   acao,
   reload,
-  nomePaciente
+  nomePaciente,
 }: ModalLesaoAcompanhamentoProps) {
   const [initialRecord, setInitialRecord] = useState<any>(null);
 
@@ -144,7 +145,7 @@ export default function ModalLesaoAcompanhamento({
                   <FieldLabel>
                     Data <span className="text-destructive">*</span>
                   </FieldLabel>
-                  <Input type="date"  max="2999-12-31" {...field} />
+                  <Input type="date" max="2999-12-31" {...field} />
                   <FieldError errors={[fieldState.error]} />
                 </Field>
               )}
@@ -188,7 +189,12 @@ export default function ModalLesaoAcompanhamento({
                   Cancelar
                 </Button>
               </DialogClose>
-              <Button type="submit">Salvar</Button>
+              <Button disabled={form.formState.isSubmitting} type="submit">
+                {form.formState.isSubmitting && (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                )}
+                Salvar
+              </Button>
             </DialogFooter>
           </form>
         </DialogContent>

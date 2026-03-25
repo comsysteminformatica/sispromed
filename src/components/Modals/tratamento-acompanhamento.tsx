@@ -25,6 +25,7 @@ import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import { Textarea } from "../ui/textarea";
 import { formatarDataTimezoneParaISO } from "@/utils/format";
+import { Loader2 } from "lucide-react";
 
 type ModalTratamentoAcompanhamentoProps = {
   isOpen: boolean;
@@ -188,7 +189,12 @@ export default function ModalTratamentoAcompanhamento({
                   Cancelar
                 </Button>
               </DialogClose>
-              <Button type="submit">Salvar</Button>
+              <Button disabled={form.formState.isSubmitting} type="submit">
+                {form.formState.isSubmitting && (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                )}
+                Salvar
+              </Button>
             </DialogFooter>
           </form>
         </DialogContent>
