@@ -38,6 +38,8 @@ import ModalConvenio from "./convenio";
 import ModalClinica from "./clinica";
 import ModalNefrologista from "./nefrologista";
 import ModalTipoAcesso from "./tipo-acesso";
+import ModalLesao from "./lesao";
+import ModalTratamento from "./tratamento";
 
 export interface OpcaoSelect {
   id: number;
@@ -526,6 +528,8 @@ export function FormAsyncSelect({
   const [isModalClinica, setIsModalClinica] = useState(false);
   const [isModalNefrologista, setIsModalNefrologista] = useState(false);
   const [isModalTipoAcesso, setIsModalTipoAcesso] = useState(false);
+  const [isModalLesao, setIsModalLesao] = useState(false);
+  const [isModalTratamento, setIsModalTratamento] = useState(false)
 
   const [localOptions, setLocalOptions] = useState<
     { label: string; value: number }[]
@@ -547,6 +551,12 @@ export function FormAsyncSelect({
     }
     if (inputId === "tipo_acesso_id") {
       setIsModalTipoAcesso(true);
+    }
+    if (inputId === "lesao_id") {
+      setIsModalLesao(true);
+    }
+    if (inputId === "tratamento_id"){
+      setIsModalTratamento(true);
     }
   }
 
@@ -661,6 +671,16 @@ export function FormAsyncSelect({
         isOpen={isModalTipoAcesso}
         setIsOpen={setIsModalTipoAcesso}
         acao="criar"
+      />
+      <ModalLesao
+        isOpen={isModalLesao}
+        setIsOpen={setIsModalLesao}
+        acao="criar"
+      />
+      <ModalTratamento
+      isOpen={isModalTratamento}
+      setIsOpen={setIsModalTratamento}
+      acao="criar"
       />
 
       <AsyncSelect

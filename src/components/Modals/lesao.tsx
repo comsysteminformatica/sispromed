@@ -25,7 +25,7 @@ type ModalLesaoProps = {
   setIsOpen: (isOpen: boolean) => void;
   acao: "criar" | "editar";
   id?: number;
-  reload: () => Promise<void>;
+  reload?: () => Promise<void> | void;
 };
 
 const formSchema = z.object({
@@ -62,9 +62,10 @@ export default function ModalLesao({
       } else if (acao === "editar") {
         response = await editarLesao(id, data);
       }
-
-      await reload();
-      setIsOpen(false);
+      if (reload) {
+        await reload();
+      }
+      setIsOpen(false)
       toast.success(response.message);
     } catch (error) {
       if (error instanceof AxiosError) {

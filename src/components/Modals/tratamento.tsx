@@ -18,14 +18,18 @@ import { Loader2 } from "lucide-react";
 
 import { useEffect } from "react";
 import { toast } from "sonner";
-import { consultarTratamento, criarTratamento, editarTratamento } from "@/service/api";
+import {
+  consultarTratamento,
+  criarTratamento,
+  editarTratamento,
+} from "@/service/api";
 
 type ModalTratamentoProps = {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   acao: "criar" | "editar";
   id?: number;
-  reload: () => Promise<void>;
+  reload?: () => Promise<void> | void;
 };
 
 const formSchema = z.object({
@@ -62,8 +66,9 @@ export default function ModalTratamento({
       } else if (acao === "editar") {
         response = await editarTratamento(id, data);
       }
-
-      await reload();
+      if (reload) {
+        await reload();
+      }
       setIsOpen(false);
       toast.success(response.message);
     } catch (error) {
