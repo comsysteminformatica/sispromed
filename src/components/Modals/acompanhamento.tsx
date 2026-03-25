@@ -529,7 +529,7 @@ export function FormAsyncSelect({
   const [isModalNefrologista, setIsModalNefrologista] = useState(false);
   const [isModalTipoAcesso, setIsModalTipoAcesso] = useState(false);
   const [isModalLesao, setIsModalLesao] = useState(false);
-  const [isModalTratamento, setIsModalTratamento] = useState(false)
+  const [isModalTratamento, setIsModalTratamento] = useState(false);
 
   const [localOptions, setLocalOptions] = useState<
     { label: string; value: number }[]
@@ -555,7 +555,7 @@ export function FormAsyncSelect({
     if (inputId === "lesao_id") {
       setIsModalLesao(true);
     }
-    if (inputId === "tratamento_id"){
+    if (inputId === "tratamento_id") {
       setIsModalTratamento(true);
     }
   }
@@ -628,6 +628,10 @@ export function FormAsyncSelect({
     }
   };
 
+  const handleMenuClose = () => {
+    setHasOpened(false);
+  };
+
   const selectValue = isMulti
     ? localOptions.filter(
         (opt) => Array.isArray(value) && value.includes(opt.value)
@@ -666,7 +670,7 @@ export function FormAsyncSelect({
         setIsOpen={setIsModalNefrologista}
         acao="criar"
       />
-      
+
       <ModalTipoAcesso
         isOpen={isModalTipoAcesso}
         setIsOpen={setIsModalTipoAcesso}
@@ -678,9 +682,9 @@ export function FormAsyncSelect({
         acao="criar"
       />
       <ModalTratamento
-      isOpen={isModalTratamento}
-      setIsOpen={setIsModalTratamento}
-      acao="criar"
+        isOpen={isModalTratamento}
+        setIsOpen={setIsModalTratamento}
+        acao="criar"
       />
 
       <AsyncSelect
@@ -692,6 +696,7 @@ export function FormAsyncSelect({
         defaultOptions
         loadOptions={loadOptions}
         onMenuOpen={handleMenuOpen}
+        onMenuClose={handleMenuClose}
         value={selectValue}
         onChange={handleChange}
         placeholder={placeholder || "Selecione..."}
