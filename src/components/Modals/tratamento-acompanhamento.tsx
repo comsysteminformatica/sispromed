@@ -144,7 +144,7 @@ export default function ModalTratamentoAcompanhamento({
                   <FieldLabel>
                     Data <span className="text-destructive">*</span>
                   </FieldLabel>
-                  <Input type="date"  max="2999-12-31" {...field} />
+                  <Input type="date" max="2999-12-31" {...field} />
                   <FieldError errors={[fieldState.error]} />
                 </Field>
               )}
@@ -159,9 +159,10 @@ export default function ModalTratamentoAcompanhamento({
                   </FieldLabel>
                   <FormAsyncSelect
                     placeholder="Buscar tratamentos..."
+                    inputId={field.name}
                     value={field.value}
                     onChange={field.onChange}
-                    fetchFn={consultarTratamentos}
+                    fetchFn={(v) => consultarTratamentos("", "Nome", v)}
                     initialData={initialRecord?.tratamento}
                   />
                   <FieldError errors={[fieldState.error]} />
