@@ -171,7 +171,7 @@ export default function DashboardVascular() {
             <CardContent className="flex-1 pb-0">
               <ChartContainer
                 config={item.chart.chartConfig}
-                className="mx-auto aspect-square max-h-[300px]"
+                className="mx-auto aspect-square max-h-[400px]"
               >
                 <PieChart>
                   <ChartTooltip content={<ChartTooltipContent hideLabel />} />
@@ -198,7 +198,7 @@ export default function DashboardVascular() {
 
                   <ChartLegend
                     content={<ChartLegendContent nameKey="name" />}
-                    className="-translate-y-2 flex-wrap gap-2 *:basis-1/4 *:justify-center"
+                    className="-translate-y-2 flex flex-nowrap gap-2 overflow-x-auto pb-2"
                   />
                 </PieChart>
               </ChartContainer>
