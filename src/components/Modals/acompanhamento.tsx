@@ -184,6 +184,10 @@ export default function ModalAcompanhamento({
   const handleTabChange = (event: React.KeyboardEvent<HTMLFormElement>) => {
     if (event.key !== "Tab") return;
 
+    if (!formRef.current?.contains(document.activeElement)) {
+      return;
+    }
+
     event.preventDefault();
 
     if (!formRef.current) return;
